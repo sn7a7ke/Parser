@@ -3,6 +3,8 @@
     public class GameSummary
     {
         public string Link { get; set; }
+        public string Country { get; set; }
+        public string League { get; set; }
         public string Round { get; set; }
         public string DateTime { get; set; }
         public string HomeTeam { get; set; }
