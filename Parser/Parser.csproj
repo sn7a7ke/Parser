@@ -53,7 +53,6 @@
     <Compile Include="ILoader.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="IUrl.cs" />
-    <Compile Include="HtmlWebLoader.cs" />
     <Compile Include="JsonUtility.cs" />
     <Compile Include="MyScore\BaseUrl.cs" />
     <Compile Include="MyScore\MatchDetails.cs" />

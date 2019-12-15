@@ -38,15 +38,11 @@ namespace SeleniumProvider
             return new ChromeDriver(dir, options, TimeSpan.FromSeconds(120));
         }
 
-        public void GoTo(string url)
+        public void GoTo(string url, string xPath = null)
         {
             Driver.Url = url;
-        }
-
-        public void GoTo(string url, string xPath)
-        {
-            Driver.Url = url;
-            WaitElement(xPath);
+            if (!string.IsNullOrEmpty(xPath))
+                WaitElement(xPath);
         }
 
         public void SendKeys(string xPath, string text)
