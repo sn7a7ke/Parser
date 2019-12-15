@@ -14,7 +14,7 @@ namespace Parser
             _loader = loader ?? throw new ArgumentNullException(nameof(loader));
         }
 
-        public event Action<object, IEnumerable<TResult>> ReceivedChunk;
+        public event Action<object, TResult> ReceivedChunk;
         public event Action<object> Done;
 
         public void Run(List<TDetails> detailsList)
@@ -28,7 +28,7 @@ namespace Parser
             }
             Done?.Invoke(this);
         }
-        public IEnumerable<TResult> Run(TDetails details)
+        public TResult Run(TDetails details)
         {
             var page = _loader.GetPage(details);
             var results = _parser.Parse(page);

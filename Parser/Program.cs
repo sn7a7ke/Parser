@@ -26,7 +26,7 @@ namespace Parser
             var parser = new InitialDetailsParser();
             var url = new InitialUrl();
             var loader = new SeleniumLoader<InitialDetails>(url);
-            var executor = new Executor<InitialDetails, string>(parser, loader);
+            var executor = new Executor<InitialDetails, IEnumerable<string>>(parser, loader);
             //executor.ReceivedChunk += Executor_ReceivedChunk;
             //executor.Done += Executor_Done;
             return executor.Run(details);
