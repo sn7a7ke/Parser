@@ -23,7 +23,7 @@ namespace Parser
 
         private static IEnumerable<string> GetLinksOfLeague(InitialDetails details)
         {
-            var parser = new MatchDetailsParser();
+            var parser = new InitialDetailsParser();
             var url = new InitialUrl();
             var loader = new SeleniumLoader<InitialDetails>(url);
             var executor = new Executor<InitialDetails, string>(parser, loader);

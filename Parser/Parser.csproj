@@ -59,7 +59,7 @@
     <Compile Include="MyScore\FinalMatchResult.cs" />
     <Compile Include="MyScore\InitialDetails.cs" />
     <Compile Include="MyScore\MatchUrl.cs" />
-    <Compile Include="MyScore\MatchDetailsParser.cs" />
+    <Compile Include="MyScore\InitialDetailsParser.cs" />
     <Compile Include="MyScore\InitialUrl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

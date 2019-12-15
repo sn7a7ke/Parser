@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Parser.MyScore
 {
-    class MatchDetailsParser : IParser<string>
+    class InitialDetailsParser : IParser<string>
     {
         public IEnumerable<string> Parse(HtmlDocument document)
         {
