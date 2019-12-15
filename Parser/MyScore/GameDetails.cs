@@ -1,8 +1,8 @@
 ﻿namespace Parser.MyScore
 {
-    public class MatchDetails
+    public class GameDetails
     {
-        public string MatchId { get; set; }
+        public string GameId { get; set; }
 
         public string Fixture { get; set; }
     }
