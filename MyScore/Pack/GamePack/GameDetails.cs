@@ -1,4 +1,4 @@
-﻿namespace MyScore
+﻿namespace MyScore.Pack.GamePack
 {
     public class GameDetails
     {

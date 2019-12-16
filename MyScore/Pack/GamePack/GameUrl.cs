@@ -1,6 +1,6 @@
 ﻿using Parser.Interfaces;
 
-namespace MyScore
+namespace MyScore.Pack.GamePack
 {
     public class GameUrl : BaseUrl, IUrl<GameDetails>
     {

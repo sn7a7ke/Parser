@@ -3,7 +3,7 @@ using Parser.Interfaces;
 using MyScore.Models.Football;
 using System;
 
-namespace MyScore
+namespace MyScore.Pack.GamePack
 {
     public class GameDetailsParser : IParser<Game>
     {

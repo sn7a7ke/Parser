@@ -1,6 +1,6 @@
-﻿namespace MyScore
+﻿namespace MyScore.Pack.LeaguePack
 {
-    public class InitialDetails
+    public class LeagueDetails
     {
         public string Game { get; set; }
 

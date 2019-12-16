@@ -1,12 +1,12 @@
 ﻿using Parser.Interfaces;
 
-namespace MyScore
+namespace MyScore.Pack.LeaguePack
 {
-    public class InitialUrl : BaseUrl, IUrl<InitialDetails>
+    public class LeagueUrl : BaseUrl, IUrl<LeagueDetails>
     {
         public virtual string Prefix { get; protected set; } = "{0}/{1}/{2}/{3}/";
 
-        public virtual string Get(InitialDetails details)
+        public virtual string Get(LeagueDetails details)
         {
             var template = $"{Base}{Prefix}";
 

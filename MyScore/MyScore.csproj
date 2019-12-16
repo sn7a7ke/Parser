@@ -52,12 +52,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
-    <Compile Include="GameDetails.cs" />
-    <Compile Include="GameDetailsParser.cs" />
-    <Compile Include="GameUrl.cs" />
-    <Compile Include="InitialDetails.cs" />
-    <Compile Include="InitialDetailsParser.cs" />
-    <Compile Include="InitialUrl.cs" />
+    <Compile Include="Pack\GamePack\GameDetails.cs" />
+    <Compile Include="Pack\GamePack\GameDetailsParser.cs" />
+    <Compile Include="Pack\GamePack\GameExecutor.cs" />
+    <Compile Include="Pack\GamePack\GameUrl.cs" />
+    <Compile Include="Pack\LeaguePack\LeagueDetails.cs" />
+    <Compile Include="Pack\LeaguePack\LeagueDetailsParser.cs" />
+    <Compile Include="Pack\LeaguePack\LeagueExecutor.cs" />
+    <Compile Include="Pack\LeaguePack\LeagueUrl.cs" />
     <Compile Include="Models.Football\Game.cs" />
     <Compile Include="Models.Football\GameIncident.cs" />
     <Compile Include="Models.Football\GameSummary.cs" />

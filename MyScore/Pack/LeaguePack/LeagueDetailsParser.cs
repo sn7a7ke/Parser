@@ -3,9 +3,9 @@ using Parser.Interfaces;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace MyScore
+namespace MyScore.Pack.LeaguePack
 {
-    public class InitialDetailsParser : IParser<IEnumerable<string>>
+    public class LeagueDetailsParser : IParser<IEnumerable<string>>
     {
         public IEnumerable<string> Parse(HtmlDocument document)
         {

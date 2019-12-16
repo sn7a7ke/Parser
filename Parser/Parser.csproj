@@ -52,7 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Executor.cs" />
+    <Compile Include="AExecutor.cs" />
+    <Compile Include="Interfaces\IExecutor.cs" />
     <Compile Include="Interfaces\ILoader.cs" />
     <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\IUrl.cs" />
