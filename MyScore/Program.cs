@@ -1,13 +1,7 @@
-﻿using MyScore.Models.Football;
-using MyScore.Pack.GamePack;
+﻿using MyScore.Pack.GamePack;
 using MyScore.Pack.LeaguePack;
-using Parser;
 using Parser.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyScore
 {
@@ -33,7 +27,6 @@ namespace MyScore
             var gameExecutor = new GameExecutor();
             var game = DoParsing(gameExecutor, gameDetails);
 
-
             Console.WriteLine("Done...");
             Console.ReadKey();
         }
@@ -41,21 +34,6 @@ namespace MyScore
         private static TResult DoParsing<TDetails, TResult>(IExecutor<TDetails, TResult> executor, TDetails details)
         {            
             return executor.Run(details);
-        }
-
-        private static void Executor_ReceivedChunk(object obj, IEnumerable<string> data)
-        {
-            foreach (var item in data)
-                Console.WriteLine($"{item}");
-
-            var file = new Storage("ukraine_2017-2018.txt");
-            file.Save(data);
-        }
-
-        private static void Executor_Done(object obj)
-        {
-            Console.WriteLine("Done...");
-            Console.ReadKey();
         }
     }
 }

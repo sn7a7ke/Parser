@@ -88,27 +88,29 @@ namespace SeleniumProvider
             }
         }
 
-        public bool WaitOfWholeList(string xPath, string keyToSend, int ms = 200, int repeat = 10)
+        /// <summary>
+        /// Wait for element to load
+        /// </summary>
+        /// <param name="xPath">xPath to element</param>
+        /// <param name="keyToSend">key to send</param>
+        /// <param name="seconds">appearance time</param>
+        /// <param name="ms">interval between sending keystrokes</param>
+        /// <param name="repeat">number of keystrokes</param>
+        /// <returns></returns>
+        public bool WaitElement(string xPath, string keyToSend, int seconds = 60, int ms = 50, int repeat = 10)
         {
-            try
+            if (WaitElement(xPath, seconds))
             {
-                var el = Driver.FindElement(By.XPath(xPath));
-                if (el.Displayed)
+                Click(xPath);
+                Actions actions = new Actions(Driver);
+                for (int i = 0; i < repeat; i++)
                 {
-                    el.Click();
-                    Actions actions = new Actions(Driver);
-                    for (int i = 0; i < repeat; i++)
-                    {
-                        actions.SendKeys(keyToSend).Build().Perform();
-                        Thread.Sleep(ms);
-                    }
+                    actions.SendKeys(keyToSend).Build().Perform();
+                    Thread.Sleep(ms);
                 }
                 return true;
             }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
+            return false;
         }
 
         public void CloseBrowser() => Driver.Close();

@@ -9,9 +9,6 @@ namespace MyScore.Pack.GamePack
     {
         public Game Parse(HtmlDocument document)
         {
-            // filter html elements on the basis of class name
-            //IEnumerable nodes = doc.DocumentNode.Descendants().Where(n => n.HasClass("mw-jump-link"));
-
             var sum = new GameSummary();
             string temp;
             string[] parts;
