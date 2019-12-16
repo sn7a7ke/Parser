@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Parser.Interfaces;
 using Parser.MyScore.Models.Football;
 using System;
 

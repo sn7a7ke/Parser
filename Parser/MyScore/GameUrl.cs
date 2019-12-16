@@ -1,4 +1,6 @@
-﻿namespace Parser.MyScore
+﻿using Parser.Interfaces;
+
+namespace Parser.MyScore
 {
     public class GameUrl : BaseUrl, IUrl<GameDetails>
     {

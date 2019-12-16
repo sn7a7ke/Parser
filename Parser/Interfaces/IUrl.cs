@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Parser
+﻿namespace Parser.Interfaces
 {
-    public interface IUrl<T>
+    public interface IUrl<in T>
     {
         string Base { get; }
 

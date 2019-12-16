@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Parser.Interfaces;
 using SeleniumProvider;
 
 namespace Parser
@@ -6,13 +7,11 @@ namespace Parser
     public class SeleniumLoader<T> : ILoader<T>
     {
         private readonly WebDriverProvider _provider;
-        private readonly HtmlWeb _web;
         private readonly IUrl<T> _url;
 
         public SeleniumLoader(IUrl<T> url)
         {
             _provider = new WebDriverProvider();
-            _web = new HtmlWeb();
             _url = url;
         }
 

@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 
-namespace Parser
+namespace Parser.Interfaces
 {
     public interface IParser<out T>
     {

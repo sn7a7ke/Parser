@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Parser.Interfaces;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 

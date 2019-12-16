@@ -50,9 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Executor.cs" />
-    <Compile Include="ILoader.cs" />
-    <Compile Include="IParser.cs" />
-    <Compile Include="IUrl.cs" />
+    <Compile Include="Interfaces\ILoader.cs" />
+    <Compile Include="Interfaces\IParser.cs" />
+    <Compile Include="Interfaces\IUrl.cs" />
     <Compile Include="JsonUtility.cs" />
     <Compile Include="MyScore\BaseUrl.cs" />
     <Compile Include="MyScore\GameDetails.cs" />
