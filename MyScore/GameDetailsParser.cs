@@ -1,9 +1,9 @@
 ﻿using HtmlAgilityPack;
 using Parser.Interfaces;
-using Parser.MyScore.Models.Football;
+using MyScore.Models.Football;
 using System;
 
-namespace Parser.MyScore
+namespace MyScore
 {
     public class GameDetailsParser : IParser<Game>
     {

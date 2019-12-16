@@ -3,7 +3,7 @@ using Parser.Interfaces;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace Parser.MyScore
+namespace MyScore
 {
     public class InitialDetailsParser : IParser<IEnumerable<string>>
     {

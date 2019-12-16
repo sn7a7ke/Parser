@@ -1,4 +1,4 @@
-﻿namespace Parser.MyScore
+﻿namespace MyScore
 {
     public abstract class BaseUrl
     {

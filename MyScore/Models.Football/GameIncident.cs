@@ -1,4 +1,4 @@
-﻿namespace Parser.MyScore.Models.Football
+﻿namespace MyScore.Models.Football
 {
     public class GameIncident
     {

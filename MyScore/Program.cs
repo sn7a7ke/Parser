@@ -1,13 +1,16 @@
-﻿using Parser.MyScore;
-using Parser.MyScore.Models.Football;
+﻿using MyScore.Models.Football;
+using Parser;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Parser
+namespace MyScore
 {
-    static class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             //var details = new InitialDetails
             //{

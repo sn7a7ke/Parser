@@ -1,6 +1,6 @@
 ﻿using Parser.Interfaces;
 
-namespace Parser.MyScore
+namespace MyScore
 {
     public class InitialUrl : BaseUrl, IUrl<InitialDetails>
     {
