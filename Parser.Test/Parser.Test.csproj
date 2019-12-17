@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="ExecutorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SeleniumLoaderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -82,6 +83,10 @@
     <ProjectReference Include="..\Parser\Parser.csproj">
       <Project>{17ca8682-d3ae-4b8d-9fb3-9e25a40b3ff3}</Project>
       <Name>Parser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebDriverProvider\SeleniumProvider.csproj">
+      <Project>{b69ec143-e17b-4061-aaa1-45115013065e}</Project>
+      <Name>SeleniumProvider</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

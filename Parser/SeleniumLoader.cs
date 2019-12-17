@@ -6,11 +6,16 @@ namespace Parser
 {
     public class SeleniumLoader : ILoader
     {
-        private readonly WebDriverProvider _provider;
+        private readonly IWebDriverProvider _provider;
 
         public SeleniumLoader()
         {
             _provider = new WebDriverProvider();
+        }
+
+        protected SeleniumLoader(IWebDriverProvider provider)
+        {
+            _provider = provider;
         }
 
         public HtmlDocument GetPage(IUrl url) => GetPage(url, null);

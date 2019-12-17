@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace SeleniumProvider
 {
-    public class WebDriverProvider
+    public class WebDriverProvider : IWebDriverProvider
     {
         public IWebDriver Driver { get; private set; }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using AutoFixture;
+﻿using AutoFixture;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
