@@ -1,16 +1,15 @@
-﻿using HtmlAgilityPack;
-using Parser.Interfaces;
+﻿using Parser;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.LeaguePack
 {
-    public class LeagueParser : IParser<List<string>>
+    public class LeagueParser : Parser<List<string>>
     {
-        public List<string> Parse(HtmlDocument document)
+        public override List<string> Parse()
         {
             var results = new List<string>();
-            var parentNode = document.DocumentNode.SelectSingleNode("//*[@id=\"live-table\"]/div[1]/div/div");
+            var parentNode = Document.DocumentNode.SelectSingleNode("//*[@id=\"live-table\"]/div[1]/div/div");
             var rgx = new Regex(@"^g_1_\w+");
             foreach (var node in parentNode.ChildNodes)
             {

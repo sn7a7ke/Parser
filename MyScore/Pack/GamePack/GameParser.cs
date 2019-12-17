@@ -1,84 +1,73 @@
-﻿using HtmlAgilityPack;
-using Parser.Interfaces;
-using MyScore.Models.Football;
-using System;
+﻿using MyScore.Models.Football;
+using Parser;
 
 namespace MyScore.Pack.GamePack
 {
-    public class GameParser : IParser<Game>
+    public class GameParser : Parser<Game>
     {
-        public Game Parse(HtmlDocument document)
+        public override Game Parse()
         {
             var sum = new GameSummary();
-            string temp;
-            string[] parts;
-            HtmlNode node;
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]");
-            temp = node?.InnerText;
-            parts = temp?.Split('"', ':');
-            if (parts?.Length > 0)
-                sum.Country = parts[0].Trim();
+            sum.Country = InnerTextNodeSplit("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]", 0, '"', ':');
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]/a");
-            temp = node?.InnerText;
-            parts = temp?.Split('-');
-            if (parts?.Length < 2)
-                throw new ArgumentOutOfRangeException(nameof(parts));
-            sum.Round = parts[parts.Length - 1].Trim();
-            sum.League = temp.Substring(0, temp.Length - sum.Round.Length).Trim(' ', '-');
+            sum.League = InnerTextNode("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]/a", t => 
+            {
+                var p = t.Split('-');
+                var s = p[p.Length - 1].Trim();
+                return t.Substring(0, t.Length - s.Length).Trim(' ', '-');
+            });
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"utime\"]");
-            sum.DateTime = node?.InnerText;
+            sum.Round = InnerTextNodeSplit("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]/a", -1, '-');
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"flashscore\"]/div[1]/div[1]/div[2]/div/div/a");
-            sum.HomeTeam = node?.InnerText;
+            sum.DateTime = InnerTextNode("//*[@id=\"utime\"]");
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"flashscore\"]/div[1]/div[3]/div[2]/div/div/a");
-            sum.AwayTeam = node?.InnerText;
+            sum.HomeTeam = InnerTextNode("//*[@id=\"flashscore\"]/div[1]/div[1]/div[2]/div/div/a");
+            
+            sum.AwayTeam = InnerTextNode("//*[@id=\"flashscore\"]/div[1]/div[3]/div[2]/div/div/a");
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"event_detail_current_result\"]/span[1]");
-            sum.ScoreHomeTeam = node?.InnerText;
+            sum.ScoreHomeTeam = InnerTextNode("//*[@id=\"event_detail_current_result\"]/span[1]");
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"event_detail_current_result\"]/span[2]/span[2]");
-            sum.ScoreAwayTeam = node?.InnerText;
+            sum.ScoreAwayTeam = InnerTextNode("//*[@id=\"event_detail_current_result\"]/span[2]/span[2]");
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"event_detail_current_result\"]/span[3]/span[1]");
-            sum.ScoreFTHomeTeam = node?.InnerText;
+            sum.ScoreFTHomeTeam = InnerTextNode("//*[@id=\"event_detail_current_result\"]/span[3]/span[1]");
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"event_detail_current_result\"]/span[3]/span[2]/span[2]");
-            sum.ScoreFTAwayTeam = node?.InnerText;
+            sum.ScoreFTAwayTeam = InnerTextNode("//*[@id=\"event_detail_current_result\"]/span[3]/span[2]/span[2]");
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"flashscore\"]/div[1]/div[2]/div[2]");
-            sum.Completed = node?.InnerText;
+            sum.Completed = InnerTextNode("//*[@id=\"flashscore\"]/div[1]/div[2]/div[2]");
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"summary-content\"]/div[1]/div[1]/div[2]/span[1]");
-            sum.ScoreHalfHomeTeam = node?.InnerText.Trim();
+            sum.ScoreHalfHomeTeam = InnerTextNode("//*[@id=\"summary-content\"]/div[1]/div[1]/div[2]/span[1]"); //wait loading
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"summary-content\"]/div[1]/div[1]/div[2]/span[2]");
-            sum.ScoreHalfAwayTeam = node?.InnerText.Trim();
+            sum.ScoreHalfAwayTeam = InnerTextNode("//*[@id=\"summary-content\"]/div[1]/div[1]/div[2]/span[2]");
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[1]");
-            temp = node?.InnerText;
-            parts = temp?.Split(':', ',');
-            if (parts?.Length > 1)
-                sum.Judge = parts[1].Trim();
+            sum.Judge = InnerTextNodeSplit("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[1]", 1, ':', ',');
 
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[2]");
-            temp = node?.InnerText;
-            parts = temp?.Split(':', ',');
-            if (parts?.Length > 1)
-                sum.Attendance = parts[1].Trim();
-
-            node = document.DocumentNode.SelectSingleNode("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[3]");
-            temp = node?.InnerText;
-            parts = temp?.Split(':', ',');
-            if (parts?.Length > 1)
-                sum.Stadium = parts[1].Trim();
+            sum.Attendance = InnerTextNodeSplit("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[2]", 1, ':', ',');
+            
+            sum.Stadium = InnerTextNodeSplit("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[3]", 1, ':', ',');
 
             var game = new Game();
             game.Summary = sum;
             return game;
+        }
+
+        private string InnerTextNodeSplit(string xPath, int choice, params char[] separator)
+        {
+            var inner = InnerTextNode(xPath);
+            var parts = inner?.Split(separator);
+            if (parts == null || parts.Length == 0)
+                return null;
+            if (choice >= 0)
+            {
+                if (parts.Length > choice)
+                    return parts[choice].Trim();
+            }
+            else
+            {
+                if (parts.Length + choice >= 0)
+                    return parts[parts.Length + choice].Trim();
+            }
+            return null;
         }
     }
 }

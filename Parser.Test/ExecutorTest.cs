@@ -23,14 +23,15 @@ namespace Parser.Test
             mILoader.Setup(l => l.GetPage(mUrl.Object, "some text")).Returns(fHtmlDocument);
 
             var mIParser = new Mock<IParser<string>>();
-            mIParser.Setup(p => p.Parse(fHtmlDocument)).Returns(fResult);
+            mIParser.SetupSet(p => p.Document = fHtmlDocument);
+            mIParser.Setup(p => p.Parse()).Returns(fResult);
 
             var executor = new Executor<string>(mILoader.Object, mIParser.Object);
             // act
             var result = executor.Run(mUrl.Object);
             // assert
             mILoader.Verify(l => l.GetPage(mUrl.Object));
-            mIParser.Verify(p => p.Parse(fHtmlDocument));
+            mIParser.Verify(p => p.Parse());
             Assert.AreEqual(fResult, result);            
         }
     }

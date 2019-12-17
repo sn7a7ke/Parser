@@ -15,8 +15,8 @@ namespace Parser
 
         public virtual TResult Run(IUrl url)
         {
-            var page = _loader.GetPage(url);
-            var results = _parser.Parse(page);
+            _parser.Document = _loader.GetPage(url);
+            var results = _parser.Parse();
             return results;
         }
     }
