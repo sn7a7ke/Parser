@@ -1,14 +1,12 @@
-﻿using Parser.Interfaces;
-
-namespace MyScore.Pack.GamePack
+﻿namespace MyScore.Pack.GamePack
 {
-    public class GameUrl : BaseUrl, IUrl<GameDetails>
+    public class GameUrl : BaseUrl<GameDetails>
     {
-        public virtual string Prefix { get; protected set; } = "match/{0}/{1}";
+        public override string Prefix { get; protected set; } = "match/{0}/{1}";
 
-        public virtual string Get(GameDetails details)
+        public override string Get(GameDetails details)
         {
-            var url = string.Format($"{Base}{Prefix}", details.GameId, details.Fixture);
+            var url = string.Format(Template, details.GameId, details.Fixture);
             return url;
         }
     }
