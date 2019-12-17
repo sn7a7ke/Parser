@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyScore", "MyScore\MyScore.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{63C59559-0619-4B40-9388-E6E02F00C96E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parser.Test", "Parser.Test\Parser.Test.csproj", "{6A8467FA-ABA9-46AF-85B6-F0F1BBFA028E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{63C59559-0619-4B40-9388-E6E02F00C96E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63C59559-0619-4B40-9388-E6E02F00C96E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63C59559-0619-4B40-9388-E6E02F00C96E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A8467FA-ABA9-46AF-85B6-F0F1BBFA028E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8467FA-ABA9-46AF-85B6-F0F1BBFA028E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8467FA-ABA9-46AF-85B6-F0F1BBFA028E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8467FA-ABA9-46AF-85B6-F0F1BBFA028E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
