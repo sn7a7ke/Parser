@@ -1,15 +1,13 @@
 ﻿using MyScore.Models.Football;
 using Parser;
+using Parser.Interfaces;
 
 namespace MyScore.Pack.GamePack
 {
-    public class GameExecutor : AExecutor<GameDetails, Game>
+    public class GameExecutor : Executor<Game>
     {
-        public GameExecutor()
+        public GameExecutor(ILoader loader) : base(loader, new GameParser())
         {
-            _parser = new GameDetailsParser();
-            var url = new GameUrl();
-            _loader = new SeleniumLoader<GameDetails>(url);
         }
     }
 }

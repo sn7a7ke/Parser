@@ -2,10 +2,10 @@
 
 namespace Parser.Interfaces
 {
-    public interface ILoader<in T>
+    public interface ILoader
     {
-        HtmlDocument GetPage(T details);
+        HtmlDocument GetPage(IUrl url);
 
-        HtmlDocument GetPage(T details, string pendingXPath);
+        HtmlDocument GetPage(IUrl url, string pendingXPath);
     }
 }

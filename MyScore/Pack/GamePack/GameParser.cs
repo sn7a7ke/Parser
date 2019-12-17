@@ -5,7 +5,7 @@ using System;
 
 namespace MyScore.Pack.GamePack
 {
-    public class GameDetailsParser : IParser<Game>
+    public class GameParser : IParser<Game>
     {
         public Game Parse(HtmlDocument document)
         {

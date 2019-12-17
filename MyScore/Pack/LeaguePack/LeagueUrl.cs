@@ -1,13 +1,17 @@
 ﻿namespace MyScore.Pack.LeaguePack
 {
-    public class LeagueUrl : BaseUrl<LeagueDetails>
+    public class LeagueUrl : BaseUrl
     {
+        public string Game { get; set; }
+
+        public string Country { get; set; }
+
+        public string League { get; set; }
+
+        public string Fixture { get; set; }
+        
         public override string Prefix { get; protected set; } = "{0}/{1}/{2}/{3}/";
 
-        public override string Get(LeagueDetails details)
-        {
-            var url = string.Format(Template, details.Game, details.Country, details.League, details.Fixture);
-            return url;
-        }
+        protected override string[] Organize() => new string[] { Game, Country, League, Fixture };
     }
 }

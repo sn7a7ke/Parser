@@ -1,15 +1,13 @@
 ﻿using Parser;
+using Parser.Interfaces;
 using System.Collections.Generic;
 
 namespace MyScore.Pack.LeaguePack
 {
-    public class LeagueExecutor : AExecutor<LeagueDetails, IEnumerable<string>>
+    public class LeagueExecutor : Executor<IEnumerable<string>>
     {
-        public LeagueExecutor()
+        public LeagueExecutor(ILoader loader) : base(loader, new LeagueParser())
         {
-            _parser = new LeagueDetailsParser();
-            var url = new LeagueUrl();
-            _loader = new SeleniumLoader<LeagueDetails>(url);
         }
     }
 }

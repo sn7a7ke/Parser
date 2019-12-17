@@ -4,23 +4,20 @@ using SeleniumProvider;
 
 namespace Parser
 {
-    public class SeleniumLoader<T> : ILoader<T>
+    public class SeleniumLoader : ILoader
     {
         private readonly WebDriverProvider _provider;
-        private readonly IUrl<T> _url;
 
-        public SeleniumLoader(IUrl<T> url)
+        public SeleniumLoader()
         {
             _provider = new WebDriverProvider();
-            _url = url;
         }
 
-        public HtmlDocument GetPage(T details) => GetPage(details, null);
+        public HtmlDocument GetPage(IUrl url) => GetPage(url, null);
 
-        public HtmlDocument GetPage(T details, string pendingXPath)
+        public HtmlDocument GetPage(IUrl url, string pendingXPath)
         {
-            var url = _url.Get(details);
-            _provider.GoTo(url, pendingXPath);
+            _provider.GoTo(url.Get(), pendingXPath);
             var html = new HtmlDocument();
             html.LoadHtml(_provider.Source);
             return html;

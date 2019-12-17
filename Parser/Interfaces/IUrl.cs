@@ -1,11 +1,11 @@
 ﻿namespace Parser.Interfaces
 {
-    public interface IUrl<in T>
+    public interface IUrl
     {
         string Base { get; }
 
         string Prefix { get; }
 
-        string Get(T details);
+        string Get();
     }
 }

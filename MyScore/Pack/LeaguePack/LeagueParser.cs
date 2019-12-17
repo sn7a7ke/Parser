@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.LeaguePack
 {
-    public class LeagueDetailsParser : IParser<IEnumerable<string>>
+    public class LeagueParser : IParser<IEnumerable<string>>
     {
         public IEnumerable<string> Parse(HtmlDocument document)
         {

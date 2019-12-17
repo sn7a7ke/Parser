@@ -1,7 +1,7 @@
 ﻿namespace Parser.Interfaces
 {
-    public interface IExecutor<in TDetails, out TResult>
+    public interface IExecutor<out TResult>
     {
-        TResult Run(TDetails details);
+        TResult Run(IUrl url);
     }
 }

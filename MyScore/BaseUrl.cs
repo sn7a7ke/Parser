@@ -2,19 +2,26 @@
 
 namespace MyScore
 {
-    public abstract class BaseUrl<T> : IUrl<T>
+    public class BaseUrl : IUrl
     {
-        protected BaseUrl()
+        public virtual string Base { get; protected set; } = "https://www.myscore.com.ua/";
+
+        public virtual string Prefix { get; protected set; }
+
+        public string Get()
         {
-            Template = $"{Base}{Prefix}";
+            var url = string.Format(Compile(), Organize());
+            return url;
         }
 
-        public string Template { get; private set; }
+        protected virtual string Compile()
+        {
+            return $"{Base}{Prefix}";
+        }
 
-        public string Base { get; private set; } = "https://www.myscore.com.ua/";
-
-        public abstract string Prefix { get; protected set; }
-
-        public abstract string Get(T details);
+        protected virtual string[] Organize()
+        {
+            return new string[] { };
+        }
     }
 }
