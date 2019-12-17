@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.LeaguePack
 {
-    public class LeagueParser : IParser<IEnumerable<string>>
+    public class LeagueParser : IParser<List<string>>
     {
-        public IEnumerable<string> Parse(HtmlDocument document)
+        public List<string> Parse(HtmlDocument document)
         {
             var results = new List<string>();
             var parentNode = document.DocumentNode.SelectSingleNode("//*[@id=\"live-table\"]/div[1]/div/div");

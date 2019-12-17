@@ -1,8 +1,10 @@
-﻿using MyScore.Pack.GamePack;
+﻿using MyScore.Models.Football;
+using MyScore.Pack.GamePack;
 using MyScore.Pack.LeaguePack;
 using Parser;
 using Parser.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace MyScore
 {
@@ -19,18 +21,16 @@ namespace MyScore
                 League = "premier-league-2017-2018",
                 Fixture = "results"
             };
-            var leagueExecutor = new LeagueExecutor(loader);
+            var leagueExecutor = new Executor<List<string>>(loader, new LeagueParser());
             var gameLinks = leagueExecutor.Run(leagueUrl);
-
 
             IUrl gameUrl = new GameUrl
             {
-                GameId = "n3eCfNzq", //"vquzagAh"
+                GameId = "n3eCfNzq",
                 Fixture = "#match-summary"
             };
-            var gameExecutor = new GameExecutor(loader);
+            var gameExecutor = new Executor<Game>(loader, new GameParser());
             var game = gameExecutor.Run(gameUrl);
-
 
             Console.WriteLine("Done...");
             Console.ReadKey();

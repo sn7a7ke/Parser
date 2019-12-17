@@ -53,10 +53,8 @@
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
     <Compile Include="Pack\GamePack\GameParser.cs" />
-    <Compile Include="Pack\GamePack\GameExecutor.cs" />
     <Compile Include="Pack\GamePack\GameUrl.cs" />
     <Compile Include="Pack\LeaguePack\LeagueParser.cs" />
-    <Compile Include="Pack\LeaguePack\LeagueExecutor.cs" />
     <Compile Include="Pack\LeaguePack\LeagueUrl.cs" />
     <Compile Include="Models.Football\Game.cs" />
     <Compile Include="Models.Football\GameIncident.cs" />
