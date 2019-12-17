@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Parser
+namespace Utility
 {
     public static class JsonUtility
     {

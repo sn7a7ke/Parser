@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Parser
+namespace Utility
 {
     public class Storage
     {
