@@ -3,7 +3,7 @@ using Parser;
 
 namespace MyScore.Pack.GamePack
 {
-    public class GameParser : Parser<Game>
+    public class GameGetGameParser : Parser<Game>
     {
         public override Game Parse()
         {

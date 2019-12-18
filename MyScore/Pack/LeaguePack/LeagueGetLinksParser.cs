@@ -3,18 +3,17 @@ using Parser;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MyScore.Pack.MainPagePack
+namespace MyScore.Pack.LeaguePack
 {
-    public class MainPageScheduledGamesParser : Parser<List<string>>
+    public class LeagueGetLinksParser : Parser<List<string>>
     {
         public override List<string> Parse()
         {
             var parser = new AttributesByPatternParser
             {
-                XPath = "//*[@id=\"live-table\"]/div[2]/div/div",
+                XPath = "//*[@id=\"live-table\"]/div[1]/div/div",
                 AttributePattern = @"^g_1_\w+",
                 Attribute = "id",
-                ClassNamePattern = "^event__match--scheduled$",
                 Document = this.Document
             };
             var results = parser.Parse().Select(s => s.Substring(4)).ToList();

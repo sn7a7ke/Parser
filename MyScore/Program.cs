@@ -15,9 +15,9 @@ namespace MyScore
             var executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
-            var myLeaguesLinks = executor.Process(mainUrl, new MainPageMyLeaguesParser());
-            var scheduledGames = executor.Parse(new MainPageScheduledGamesParser());
-            var liveGames = executor.Parse(new MainPageLiveGamesParser());
+            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser());
+            var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
+            var liveGames = executor.Parse(new MainPageGetLiveLinksParser());
 
             IUrl leagueUrl = new LeagueUrl
             {
@@ -26,14 +26,14 @@ namespace MyScore
                 League = "premier-league-2017-2018",
                 Fixture = "results"
             };
-            var gameLinks = executor.Process(leagueUrl, new LeagueParser());
+            var gameLinks = executor.Process(leagueUrl, new LeagueGetLinksParser());
 
             IUrl gameUrl = new GameUrl
             {
                 GameId = "n3eCfNzq",
                 Fixture = "#match-summary"
             };
-            var game = executor.Process(gameUrl, new GameParser());
+            var game = executor.Process(gameUrl, new GameGetGameParser());
 
             Console.WriteLine("Done...");
             Console.ReadKey();

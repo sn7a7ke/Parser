@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.MainPagePack
 {
-    public class MainPageMyLeaguesParser : Parser<List<string>>
+    public class MainPageGetMyLeaguesParser : Parser<List<string>>
     {
         public override List<string> Parse()
         {
