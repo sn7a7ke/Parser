@@ -26,9 +26,10 @@ namespace Parser.Test
             mIParser.SetupSet(p => p.Document = fHtmlDocument);
             mIParser.Setup(p => p.Parse()).Returns(fResult);
 
-            var executor = new Executor<string>(mILoader.Object, mIParser.Object);
+            Executor.Loader = mILoader.Object;
+            var executor = new Executor();
             // act
-            var result = executor.Run(mUrl.Object);
+            var result = executor.Process(mUrl.Object, mIParser.Object);
             // assert
             mILoader.Verify(l => l.GetPage(mUrl.Object));
             mIParser.Verify(p => p.Parse());

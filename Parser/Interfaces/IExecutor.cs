@@ -1,7 +1,15 @@
-﻿namespace Parser.Interfaces
+﻿using HtmlAgilityPack;
+
+namespace Parser.Interfaces
 {
-    public interface IExecutor<out TResult>
+    public interface IExecutor
     {
-        TResult Run(IUrl url);
+        HtmlDocument Document { get; set; }
+
+        void Load(IUrl url);
+
+        T Parse<T>(IParser<T> parser);
+
+        T Process<T>(IUrl url, IParser<T> parser);
     }
 }

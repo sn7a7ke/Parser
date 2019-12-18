@@ -1,11 +1,9 @@
-﻿using MyScore.Models.Football;
-using MyScore.Pack.GamePack;
+﻿using MyScore.Pack.GamePack;
 using MyScore.Pack.LeaguePack;
 using MyScore.Pack.MainPagePack;
 using Parser;
 using Parser.Interfaces;
 using System;
-using System.Collections.Generic;
 
 namespace MyScore
 {
@@ -13,11 +11,11 @@ namespace MyScore
     {
         public static void Main(string[] args)
         {
-            ILoader loader = new SeleniumLoader();
+            Executor.Loader = new SeleniumLoader();
+            var executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
-            var mainPageMyLeaguesExecutor = new Executor<List<string>>(loader, new MainPageMyLeaguesParser());
-            var myLeaguesLinks = mainPageMyLeaguesExecutor.Run(mainUrl);
+            var myLeaguesLinks = executor.Process(mainUrl, new MainPageMyLeaguesParser());
 
             IUrl leagueUrl = new LeagueUrl
             {
@@ -26,16 +24,14 @@ namespace MyScore
                 League = "premier-league-2017-2018",
                 Fixture = "results"
             };
-            var leagueExecutor = new Executor<List<string>>(loader, new LeagueParser());
-            var gameLinks = leagueExecutor.Run(leagueUrl);
+            var gameLinks = executor.Process(leagueUrl, new LeagueParser());
 
             IUrl gameUrl = new GameUrl
             {
                 GameId = "n3eCfNzq",
                 Fixture = "#match-summary"
             };
-            var gameExecutor = new Executor<Game>(loader, new GameParser());
-            var game = gameExecutor.Run(gameUrl);
+            var game = executor.Process(gameUrl, new GameParser());
 
             Console.WriteLine("Done...");
             Console.ReadKey();

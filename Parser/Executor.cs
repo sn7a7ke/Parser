@@ -1,22 +1,30 @@
-﻿using Parser.Interfaces;
+﻿using HtmlAgilityPack;
+using Parser.Interfaces;
 
 namespace Parser
 {
-    public class Executor<TResult> : IExecutor<TResult>
+    public class Executor : IExecutor
     {
-        protected ILoader _loader;
-        protected IParser<TResult> _parser;
+        public HtmlDocument Document { get; set; } = new HtmlDocument();
 
-        public Executor(ILoader loader, IParser<TResult> parser)
+        public static ILoader Loader { get; set; }
+
+        public virtual void Load(IUrl url)
         {
-            _loader = loader;
-            _parser = parser;
+            Document = Loader.GetPage(url);
         }
 
-        public virtual TResult Run(IUrl url)
+        public virtual T Parse<T>(IParser<T> parser)
         {
-            _parser.Document = _loader.GetPage(url);
-            var results = _parser.Parse();
+            parser.Document = Document;
+            var results = parser.Parse();
+            return results;
+        }
+
+        public virtual T Process<T>(IUrl url, IParser<T> parser)
+        {
+            Load(url);
+            var results = Parse(parser);
             return results;
         }
     }
