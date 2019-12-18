@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
+    <Compile Include="Pack\CommonPack\AttributesByPatternParser.cs" />
     <Compile Include="Pack\GamePack\GameParser.cs" />
     <Compile Include="Pack\GamePack\GameUrl.cs" />
     <Compile Include="Pack\LeaguePack\LeagueParser.cs" />
@@ -59,6 +60,8 @@
     <Compile Include="Models.Football\Game.cs" />
     <Compile Include="Models.Football\GameIncident.cs" />
     <Compile Include="Models.Football\GameSummary.cs" />
+    <Compile Include="Pack\MainPagePack\MainPageLiveGamesParser.cs" />
+    <Compile Include="Pack\MainPagePack\MainPageScheduledGamesParser.cs" />
     <Compile Include="Pack\MainPagePack\MainPageMyLeaguesParser.cs" />
     <Compile Include="Pack\MainPagePack\MainPageUrl.cs" />
     <Compile Include="Program.cs" />

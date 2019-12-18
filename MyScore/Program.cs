@@ -16,6 +16,8 @@ namespace MyScore
 
             IUrl mainUrl = new MainPageUrl();
             var myLeaguesLinks = executor.Process(mainUrl, new MainPageMyLeaguesParser());
+            var scheduledGames = executor.Parse(new MainPageScheduledGamesParser());
+            var liveGames = executor.Parse(new MainPageLiveGamesParser());
 
             IUrl leagueUrl = new LeagueUrl
             {
