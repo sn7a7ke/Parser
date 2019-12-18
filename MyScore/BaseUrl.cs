@@ -6,7 +6,7 @@ namespace MyScore
     {
         public virtual string Base { get; protected set; } = "https://www.myscore.com.ua/";
 
-        public virtual string Prefix { get; protected set; }
+        public virtual string Prefix { get; protected set; } = "";
 
         public string Get()
         {

@@ -1,6 +1,7 @@
 ﻿using MyScore.Models.Football;
 using MyScore.Pack.GamePack;
 using MyScore.Pack.LeaguePack;
+using MyScore.Pack.MainPagePack;
 using Parser;
 using Parser.Interfaces;
 using System;
@@ -13,6 +14,10 @@ namespace MyScore
         public static void Main(string[] args)
         {
             ILoader loader = new SeleniumLoader();
+
+            IUrl mainUrl = new MainPageUrl();
+            var mainPageMyLeaguesExecutor = new Executor<List<string>>(loader, new MainPageMyLeaguesParser());
+            var myLeaguesLinks = mainPageMyLeaguesExecutor.Run(mainUrl);
 
             IUrl leagueUrl = new LeagueUrl
             {

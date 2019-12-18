@@ -59,6 +59,8 @@
     <Compile Include="Models.Football\Game.cs" />
     <Compile Include="Models.Football\GameIncident.cs" />
     <Compile Include="Models.Football\GameSummary.cs" />
+    <Compile Include="Pack\MainPagePack\MainPageMyLeaguesParser.cs" />
+    <Compile Include="Pack\MainPagePack\MainPageUrl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
