@@ -6,10 +6,10 @@ namespace Parser.Interfaces
     {
         HtmlDocument Document { get; set; }
 
-        void Load(IUrl url);
+        void Load(IUrl url, string pendingXPath = null);
 
         T Parse<T>(IParser<T> parser);
 
-        T Process<T>(IUrl url, IParser<T> parser);
+        T Process<T>(IUrl url, IParser<T> parser, string pendingXPath = null);
     }
 }

@@ -15,7 +15,6 @@ namespace MyScore.Pack.MainPagePack
                 AttributePattern = @"^g_1_\w+",
                 Attribute = "id",
                 ClassNamePattern = "^event__match--live$",
-                IsMyLeague = false,
                 Document = this.Document
             };
             var results = parser.Parse().Select(s => s.Substring(4)).ToList();

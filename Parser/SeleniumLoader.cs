@@ -18,9 +18,7 @@ namespace Parser
             _provider = provider;
         }
 
-        public HtmlDocument GetPage(IUrl url) => GetPage(url, null);
-
-        public HtmlDocument GetPage(IUrl url, string pendingXPath)
+        public HtmlDocument GetPage(IUrl url, string pendingXPath = null)
         {
             _provider.GoTo(url.Get(), pendingXPath);
             var html = new HtmlDocument();

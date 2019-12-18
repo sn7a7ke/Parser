@@ -9,9 +9,9 @@ namespace Parser
 
         public static ILoader Loader { get; set; }
 
-        public virtual void Load(IUrl url)
+        public virtual void Load(IUrl url, string pendingXPath = null)
         {
-            Document = Loader.GetPage(url);
+            Document = Loader.GetPage(url, pendingXPath);
         }
 
         public virtual T Parse<T>(IParser<T> parser)
@@ -21,9 +21,9 @@ namespace Parser
             return results;
         }
 
-        public virtual T Process<T>(IUrl url, IParser<T> parser)
+        public virtual T Process<T>(IUrl url, IParser<T> parser, string pendingXPath = null)
         {
-            Load(url);
+            Load(url, pendingXPath);
             var results = Parse(parser);
             return results;
         }
