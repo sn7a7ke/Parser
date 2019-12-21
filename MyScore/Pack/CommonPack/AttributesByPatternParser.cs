@@ -1,7 +1,5 @@
-﻿using HtmlAgilityPack;
-using Parser;
+﻿using Parser;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.CommonPack
@@ -12,41 +10,31 @@ namespace MyScore.Pack.CommonPack
 
         public string Attribute { get; set; } = "";
 
-        public bool IsMyLeague{ get; set; } = true;
+        public bool IsMyLeague { get; set; } = true;
 
-        public string EndOfMyLeaguesClassPattern { get; set; } = "^event__header--no-my-games$";
+        public string EndOfMyLeaguesClass { get; set; } = "event__header--no-my-games";
 
         public string AttributePattern { get; set; } = ".*";
 
-        public string ClassNamePattern { get; set; } = "";
+        public string ClassContains { get; set; } = "";
 
         public override List<string> Parse()
         {
             var results = new List<string>();
-            var parentNode = Document.DocumentNode.SelectSingleNode(XPath);
+            var children = Document.DocumentNode.SelectSingleNode(XPath)?.ChildNodes;
+            if (children == null)
+                return results;
             var rgx = new Regex(AttributePattern);
-            foreach (var node in parentNode.ChildNodes)
+            foreach (var node in children)
             {
-                if (IsMyLeague && EndOfSearchingForMyLeagues(node))
+                if (IsMyLeague && node.ContainClass(EndOfMyLeaguesClass))
                     break;
                 var attribute = node.Attributes[Attribute]?.Value;
                 if (!string.IsNullOrEmpty(attribute) && rgx.IsMatch(attribute)
-                    && (ContainClass(node)))
+                    && (ClassContains == "" || node.ContainClass(ClassContains)))
                     results.Add(attribute);
             }
-            return results;            
-        }
-
-        private bool EndOfSearchingForMyLeagues(HtmlNode node)
-        {
-            var endClass = new Regex(EndOfMyLeaguesClassPattern);
-            return node.GetClasses().Any(c => endClass.IsMatch(c));
-        }
-
-        private bool ContainClass(HtmlNode node)
-        {
-            var rgxClass = new Regex(ClassNamePattern);
-            return string.IsNullOrEmpty(ClassNamePattern) || node.GetClasses().Any(c => rgxClass.IsMatch(c));
+            return results;
         }
     }
 }

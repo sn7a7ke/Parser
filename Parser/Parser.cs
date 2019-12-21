@@ -10,12 +10,12 @@ namespace Parser
 
         public abstract T Parse();
 
-        public string InnerTextNode(string xPath)
+        public string InnerText(string xPath)
         {
-            return InnerTextNode(xPath, s => s);
+            return InnerText(xPath, s => s);
         }
 
-        public string InnerTextNode(string xPath, Func<string, string> func)
+        public string InnerText(string xPath, Func<string, string> func)
         {
             var node = Document.DocumentNode.SelectSingleNode(xPath);
             return func(node?.InnerText)?.Trim();

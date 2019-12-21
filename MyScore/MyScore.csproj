@@ -52,14 +52,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
+    <Compile Include="Models.Football\BriefResult.cs" />
     <Compile Include="Pack\CommonPack\AttributesByPatternParser.cs" />
+    <Compile Include="Pack\CommonPack\ExtensionNode.cs" />
+    <Compile Include="Pack\CommonPack\GetAllBriefResultsParser.cs" />
+    <Compile Include="Pack\CommonPack\GetBriefResultParser.cs" />
+    <Compile Include="Pack\CommonPack\GetLinksParser.cs" />
     <Compile Include="Pack\GamePack\GameGetGameParser.cs" />
     <Compile Include="Pack\GamePack\GameUrl.cs" />
-    <Compile Include="Pack\LeaguePack\LeagueGetLinksParser.cs" />
     <Compile Include="Pack\LeaguePack\LeagueUrl.cs" />
     <Compile Include="Models.Football\Game.cs" />
     <Compile Include="Models.Football\GameIncident.cs" />
     <Compile Include="Models.Football\GameSummary.cs" />
+    <Compile Include="Pack\MainPagePack\MainPageGetBriefResultsParser.cs" />
     <Compile Include="Pack\MainPagePack\MainPageGetLiveLinksParser.cs" />
     <Compile Include="Pack\MainPagePack\MainPageGetScheduledLinksParser.cs" />
     <Compile Include="Pack\MainPagePack\MainPageGetMyLeaguesParser.cs" />

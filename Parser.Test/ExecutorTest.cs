@@ -19,8 +19,7 @@ namespace Parser.Test
 
             var mUrl = new Mock<IUrl>();
             var mILoader = new Mock<ILoader>();
-            mILoader.Setup(l => l.GetPage(mUrl.Object)).Returns(fHtmlDocument);
-            mILoader.Setup(l => l.GetPage(mUrl.Object, "some text")).Returns(fHtmlDocument);
+            mILoader.Setup(l => l.GetPage(mUrl.Object, null)).Returns(fHtmlDocument);
 
             var mIParser = new Mock<IParser<string>>();
             mIParser.SetupSet(p => p.Document = fHtmlDocument);
@@ -31,9 +30,9 @@ namespace Parser.Test
             // act
             var result = executor.Process(mUrl.Object, mIParser.Object);
             // assert
-            mILoader.Verify(l => l.GetPage(mUrl.Object));
+            mILoader.Verify(l => l.GetPage(mUrl.Object, null));
             mIParser.Verify(p => p.Parse());
-            Assert.AreEqual(fResult, result);            
+            Assert.AreEqual(fResult, result);
         }
     }
 }
