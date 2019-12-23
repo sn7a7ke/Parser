@@ -13,7 +13,7 @@ namespace Parser
             _provider = new WebDriverProvider();
         }
 
-        protected SeleniumLoader(IWebDriverProvider provider)
+        public SeleniumLoader(IWebDriverProvider provider)
         {
             _provider = provider;
         }
