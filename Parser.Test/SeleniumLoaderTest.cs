@@ -1,33 +1,35 @@
 ﻿using AutoFixture;
+using AutoFixture.NUnit3;
 using HtmlAgilityPack;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 using Parser.Interfaces;
 using SeleniumProvider;
 
 namespace Parser.Test
 {
-    [TestClass]
+    [TestFixture]
     public class SeleniumLoaderTest
     {
-        [TestMethod]
-        public void GetPageResultIsEqual()
+        [Test]
+        [Theory, AutoMoqData]
+        public void GetPageResultIsEqual(
+            string fSource,
+            HtmlDocument fHtmlDocument,
+            HtmlDocument htmlResult,
+            Mock<IUrl> mUrl,
+            [Frozen]Mock<IWebDriverProvider> mIWebDriverProvider,
+            NestedProvider nestedProvider)
         {
             // arrange
-            var fixture = new Fixture();
-            var fSource = fixture.Create<string>();
-            var fHtmlDocument = fixture.Create<HtmlDocument>();
-            var htmlResult = new HtmlDocument();
             htmlResult.LoadHtml(fSource);
-
-            var mUrl = new Mock<IUrl>();
-            var mIWebDriverProvider = new Mock<IWebDriverProvider>();
             mIWebDriverProvider.Setup(p => p.Source).Returns(fSource);
 
-            var nestedProvider = new NestedProvider(mIWebDriverProvider.Object);
             // act
             var result = nestedProvider.GetPage(mUrl.Object);
+
             // assert
+            mIWebDriverProvider.Verify(p => p.GoTo(mUrl.Object.Get(), null));
             mIWebDriverProvider.Verify(p => p.Source);
             Assert.AreEqual(htmlResult.Text, result.Text);
         }

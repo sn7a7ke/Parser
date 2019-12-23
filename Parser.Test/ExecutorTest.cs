@@ -1,39 +1,34 @@
-﻿using AutoFixture;
+﻿using AutoFixture.NUnit3;
 using HtmlAgilityPack;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using NUnit.Framework;
 using Parser.Interfaces;
 
 namespace Parser.Test
 {
-    [TestClass]
+    [TestFixture]
     public class ExecutorTest
     {
-        [TestMethod]
-        public void RunResultIsEqual()
+        [Test]
+        [Theory, AutoMoqData]
+        public void RunResultIsEqual(
+            string fResult,
+            HtmlDocument fHtmlDocument,
+            Mock<IUrl> mUrl,
+            [Frozen]Mock<ILoader> mILoader,
+            [Frozen]Mock<IParser<string>> mIParser,
+            Executor<string> executor)
         {
             // arrange
-            var fixture = new Fixture();
-            var fResult = fixture.Create<string>();
-            var fHtmlDocument = fixture.Create<HtmlDocument>();
-
-            var mUrl = new Mock<IUrl>();
-            var mILoader = new Mock<ILoader>();
-            mILoader.Setup(l => l.GetPage(mUrl.Object)).Returns(fHtmlDocument);
-            mILoader.Setup(l => l.GetPage(mUrl.Object, "some text")).Returns(fHtmlDocument);
-
-            var mIParser = new Mock<IParser<string>>();
-            mIParser.SetupSet(p => p.Document = fHtmlDocument);
             mIParser.Setup(p => p.Parse()).Returns(fResult);
 
-            Executor.Loader = mILoader.Object;
-            var executor = new Executor();
             // act
             var result = executor.Process(mUrl.Object, mIParser.Object);
+            
             // assert
             mILoader.Verify(l => l.GetPage(mUrl.Object));
             mIParser.Verify(p => p.Parse());
-            Assert.AreEqual(fResult, result);            
+            Assert.AreEqual(fResult, result);
         }
     }
 }
