@@ -17,11 +17,12 @@ namespace Parser.Test
             Mock<IUrl> mUrl,
             [Frozen]Mock<ILoader> mILoader,
             [Frozen]Mock<IParser<string>> mIParser,
-            Executor<string> executor)
+            Executor executor)
         {
             // arrange
             mILoader.Setup(l => l.GetPage(mUrl.Object, null)).Returns(fHtmlDocument);
             mIParser.Setup(p => p.Parse()).Returns(fResult);
+            Executor.Loader = mILoader.Object;
 
             // act
             var result = executor.Process(mUrl.Object, mIParser.Object);
