@@ -1,9 +1,11 @@
-﻿using MyScore.Pack.GamePack;
+﻿using MyScore.Pack.CommonPack;
+using MyScore.Pack.GamePack;
 using MyScore.Pack.LeaguePack;
 using MyScore.Pack.MainPagePack;
 using Parser;
 using Parser.Interfaces;
 using System;
+using System.Linq;
 
 namespace MyScore
 {
@@ -15,9 +17,10 @@ namespace MyScore
             var executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
-            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser());
+            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser()).Select(s => s.Substring(4)).ToList();
             var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
             var liveGames = executor.Parse(new MainPageGetLiveLinksParser());
+            var briefResult = executor.Parse(new GetAllBriefResultsParser());
 
             IUrl leagueUrl = new LeagueUrl
             {
@@ -26,7 +29,7 @@ namespace MyScore
                 League = "premier-league-2017-2018",
                 Fixture = "results"
             };
-            var gameLinks = executor.Process(leagueUrl, new LeagueGetLinksParser());
+            var gameLinks = executor.Process(leagueUrl, new GetLinksParser());
 
             IUrl gameUrl = new GameUrl
             {

@@ -14,7 +14,7 @@ namespace MyScore.Pack.MainPagePack
                 XPath = "//*[@id=\"live-table\"]/div[2]/div/div",
                 AttributePattern = @"^g_1_\w+",
                 Attribute = "id",
-                ClassNamePattern = "^event__match--live$",
+                ClassContains = "event__match--live",
                 Document = this.Document
             };
             var results = parser.Parse().Select(s => s.Substring(4)).ToList();

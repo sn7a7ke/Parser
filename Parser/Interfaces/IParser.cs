@@ -9,8 +9,8 @@ namespace Parser.Interfaces
 
         T Parse();
 
-        string InnerTextNode(string xPath);
+        string InnerText(string xPath);
 
-        string InnerTextNode(string xPath, Func<string, string> func);
+        string InnerText(string xPath, Func<string, string> func);
     }
 }

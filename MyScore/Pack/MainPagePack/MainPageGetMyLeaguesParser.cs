@@ -9,9 +9,8 @@ namespace MyScore.Pack.MainPagePack
         public override List<string> Parse()
         {
             var results = new List<string>();
-            var parentNode = Document.DocumentNode.SelectSingleNode("//*[@id=\"my-leagues-list\"]");
-            var descs = parentNode.Descendants("a");
-            foreach (var node in descs)
+            var targetNodes = Document.DocumentNode.SelectNodes("//*[@id=\"my-leagues-list\"]//descendant::a");
+            foreach (var node in targetNodes)
             {
                 var href = node.Attributes["href"]?.Value;
                 if (!string.IsNullOrEmpty(href) && href.Contains("football"))
