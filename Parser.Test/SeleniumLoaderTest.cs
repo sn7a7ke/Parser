@@ -18,27 +18,22 @@ namespace Parser.Test
             HtmlDocument fHtmlDocument,
             HtmlDocument htmlResult,
             Mock<IUrl> mUrl,
-            [Frozen]Mock<IWebDriverProvider> mIWebDriverProvider,
-            NestedProvider nestedProvider)
+            [Frozen]Mock<IWebDriverProvider> mIWebDriverProvider)
         {
             // arrange
             htmlResult.LoadHtml(fSource);
             mIWebDriverProvider.Setup(p => p.Source).Returns(fSource);
+            var fixture = new Fixture();
+            fixture.Register(() => new SeleniumLoader(mIWebDriverProvider.Object));
+            var provider = fixture.Create<SeleniumLoader>();
 
             // act
-            var result = nestedProvider.GetPage(mUrl.Object);
+            var result = provider.GetPage(mUrl.Object);
 
             // assert
             mIWebDriverProvider.Verify(p => p.GoTo(mUrl.Object.Get(), null));
             mIWebDriverProvider.Verify(p => p.Source);
             Assert.AreEqual(htmlResult.Text, result.Text);
-        }
-
-        public class NestedProvider : SeleniumLoader
-        {
-            public NestedProvider(IWebDriverProvider provider) : base(provider)
-            {
-            }
         }
     }
 }
