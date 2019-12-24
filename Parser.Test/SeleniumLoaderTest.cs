@@ -8,10 +8,8 @@ using SeleniumProvider;
 
 namespace Parser.Test
 {
-    [TestFixture]
     public class SeleniumLoaderTest
     {
-        [Test]
         [Theory, AutoMoqData]
         public void GetPageResultIsEqual(
             string fSource,

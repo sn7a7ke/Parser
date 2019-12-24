@@ -6,10 +6,8 @@ using Parser.Interfaces;
 
 namespace Parser.Test
 {
-    [TestFixture]
     public class ExecutorTest
     {
-        [Test]
         [Theory, AutoMoqData]
         public void RunResultIsEqual(
             string fResult,
