@@ -89,28 +89,41 @@ namespace SeleniumProvider
         }
 
         /// <summary>
-        /// Wait for element to load
+        /// Wait for the element to load, and then follow the steps on the page to wait for all content to load
+        /// </summary>
+        /// <param name="xPath">xPath to element</param>
+        /// <param name="action">steps to be taken</param>
+        /// <param name="seconds">appearance time</param>
+        /// <returns></returns>
+        public bool WaitElement(string xPath, Predicate<IWebDriver> action, int seconds = 60)
+        {
+            if (WaitElement(xPath, seconds))
+                return action.Invoke(Driver);                
+            return false;
+        }
+
+        /// <summary>
+        /// The steps on the page to wait for all content to load
         /// </summary>
         /// <param name="xPath">xPath to element</param>
         /// <param name="keyToSend">key to send</param>
-        /// <param name="seconds">appearance time</param>
         /// <param name="ms">interval between sending keystrokes</param>
         /// <param name="repeat">number of keystrokes</param>
         /// <returns></returns>
-        public bool WaitElement(string xPath, string keyToSend, int seconds = 60, int ms = 50, int repeat = 10)
+        public bool WaitingAction(IWebDriver driver, string xPath, string keyToSend, int ms = 50, int repeat = 10)
         {
-            if (WaitElement(xPath, seconds))
+            var isPresent = WaitElement(xPath);
+            if (isPresent)
             {
-                Click(xPath);
-                Actions actions = new Actions(Driver);
+                driver.FindElement(By.XPath(xPath)).Click();
+                Actions actions = new Actions(driver);
                 for (int i = 0; i < repeat; i++)
                 {
                     actions.SendKeys(keyToSend).Build().Perform();
                     Thread.Sleep(ms);
                 }
-                return true;
             }
-            return false;
+            return isPresent;
         }
 
         public void CloseBrowser() => Driver.Close();
