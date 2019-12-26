@@ -20,5 +20,11 @@ namespace Parser
             var node = Document.DocumentNode.SelectSingleNode(xPath);
             return func(node?.InnerText)?.Trim();
         }
+
+        public string InnerTextSplit(string xPath, int choice, params char[] separator)
+        {
+            var node = Document.DocumentNode.SelectSingleNode(xPath);
+            return node.InnerTextSplit(choice, separator);
+        }
     }
 }

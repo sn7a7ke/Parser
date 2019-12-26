@@ -50,24 +50,5 @@ namespace MyScore.Pack.GamePack
             game.Summary = sum;
             return game;
         }
-
-        private string InnerTextSplit(string xPath, int choice, params char[] separator)
-        {
-            var inner = InnerText(xPath);
-            var parts = inner?.Split(separator);
-            if (parts == null || parts.Length == 0)
-                return null;
-            if (choice >= 0)
-            {
-                if (parts.Length > choice)
-                    return parts[choice].Trim();
-            }
-            else
-            {
-                if (parts.Length + choice >= 0)
-                    return parts[parts.Length + choice].Trim();
-            }
-            return null;
-        }
     }
 }
