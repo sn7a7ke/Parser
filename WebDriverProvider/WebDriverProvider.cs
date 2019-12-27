@@ -24,6 +24,7 @@ namespace SeleniumProvider
             var options = new ChromeOptions();
             options.AddUserProfilePreference("intl.accept_languages", "en");
             options.AddUserProfilePreference("disable-popup-blocking", "true");
+            options.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             options.AddArguments("--allow-no-sandbox-job");
             options.AddArguments("--ignore-certificate-errors");
             options.AddArguments("--no-sandbox");

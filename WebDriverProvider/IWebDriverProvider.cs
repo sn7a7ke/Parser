@@ -16,6 +16,6 @@ namespace SeleniumProvider
         void Quit();
         void SendKeys(string xPath, string text);
         bool WaitElement(string xPath, int seconds = 60);
-        bool WaitElement(string xPath, Action<IWebDriver> action, int seconds = 60);
+        bool WaitElement(string xPath, Predicate<IWebDriver> action, int seconds = 60);
     }
 }
