@@ -18,7 +18,7 @@ namespace MyScore.Pack.CommonPack
             string league = null;
             var rgx = new Regex(@"^\d+_\d+_");
             string leagueId = null;
-            var parentNode = Document.DocumentNode.SelectSingleNode("//*[@id=\"live-table\"]/div[2]/div/div");
+            var parentNode = Document.DocumentNode.SelectSingleNode(XPath.MainPageLiveTable);
             foreach (var node in parentNode.ChildNodes)
             {
                 if (node.HasClass("event__header"))

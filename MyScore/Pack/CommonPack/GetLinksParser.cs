@@ -1,5 +1,6 @@
 ﻿using Parser;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.CommonPack
 {
@@ -9,9 +10,14 @@ namespace MyScore.Pack.CommonPack
         {
             var parser = new AttributesByPatternParser
             {
-                XPath = "//*[@id=\"live-table\"]/div[1]/div/div",
-                AttributePattern = @"^g_1_\w+",
-                Attribute = "id",
+                XPath = XPath.LeaguePageLiveTable,
+                GetDesired = n =>
+                {
+                    var attribute = n.Attributes["id"]?.Value ?? "";
+                    if (Regex.IsMatch(attribute, Constants.GameAttributePattern))
+                        return attribute;
+                    return "";
+                },
                 Document = this.Document
             };
             var results = parser.Parse();

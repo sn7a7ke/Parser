@@ -1,6 +1,7 @@
-﻿using Parser;
+﻿using HtmlAgilityPack;
+using Parser;
+using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.CommonPack
 {
@@ -8,15 +9,9 @@ namespace MyScore.Pack.CommonPack
     {
         public string XPath { get; set; } = "";
 
-        public string Attribute { get; set; } = "";
+        public Func<HtmlNode, bool> IsEnd { get; set; } = (n) => false;
 
-        public bool IsMyLeague { get; set; } = true;
-
-        public string EndOfMyLeaguesClass { get; set; } = "event__header--no-my-games";
-
-        public string AttributePattern { get; set; } = ".*";
-
-        public string ClassContains { get; set; } = "";
+        public Func<HtmlNode, string> GetDesired { get; set; } = (n) => null;
 
         public override List<string> Parse()
         {
@@ -24,15 +19,13 @@ namespace MyScore.Pack.CommonPack
             var children = Document.DocumentNode.SelectSingleNode(XPath)?.ChildNodes;
             if (children == null)
                 return results;
-            var rgx = new Regex(AttributePattern);
             foreach (var node in children)
             {
-                if (IsMyLeague && node.ContainClass(EndOfMyLeaguesClass))
+                if (IsEnd(node))
                     break;
-                var attribute = node.Attributes[Attribute]?.Value;
-                if (!string.IsNullOrEmpty(attribute) && rgx.IsMatch(attribute)
-                    && (ClassContains == "" || node.ContainClass(ClassContains)))
-                    results.Add(attribute);
+                var res = GetDesired(node);
+                if (!string.IsNullOrEmpty(res))
+                    results.Add(res);
             }
             return results;
         }

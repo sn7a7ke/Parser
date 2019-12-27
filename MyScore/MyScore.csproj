@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Models.Football\BriefResult.cs" />
     <Compile Include="Pack\CommonPack\AttributesByPatternParser.cs" />
     <Compile Include="Pack\CommonPack\GetAllBriefResultsParser.cs" />

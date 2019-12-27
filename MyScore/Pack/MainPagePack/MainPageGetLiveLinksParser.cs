@@ -2,6 +2,7 @@
 using Parser;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.MainPagePack
 {
@@ -11,10 +12,15 @@ namespace MyScore.Pack.MainPagePack
         {
             var parser = new AttributesByPatternParser
             {
-                XPath = "//*[@id=\"live-table\"]/div[2]/div/div",
-                AttributePattern = @"^g_1_\w+",
-                Attribute = "id",
-                ClassContains = "event__match--live",
+                XPath = XPath.MainPageLiveTable,
+                IsEnd = n => n.ContainClass(Constants.EndOfMyLeaguesClass),
+                GetDesired = n =>
+                {
+                    var attribute = n.Attributes["id"]?.Value ?? "";
+                    if (Regex.IsMatch(attribute, Constants.GameAttributePattern) && n.ContainClass(Constants.MatchLiveClass))
+                        return attribute;
+                    return "";
+                },
                 Document = this.Document
             };
             var results = parser.Parse().Select(s => s.Substring(4)).ToList();

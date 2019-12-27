@@ -17,7 +17,7 @@ namespace MyScore
             var executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
-            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), "//*[@id=\"live-table\"]").Select(s => s.Substring(4)).ToList();
+            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPath.WaitingElement).Select(s => s.Substring(4)).ToList();
             var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
             var liveGames = executor.Parse(new MainPageGetLiveLinksParser());
             var briefResult = executor.Parse(new GetAllBriefResultsParser());
