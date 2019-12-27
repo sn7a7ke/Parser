@@ -54,7 +54,6 @@
     <Compile Include="BaseUrl.cs" />
     <Compile Include="Models.Football\BriefResult.cs" />
     <Compile Include="Pack\CommonPack\AttributesByPatternParser.cs" />
-    <Compile Include="Pack\CommonPack\ExtensionNode.cs" />
     <Compile Include="Pack\CommonPack\GetAllBriefResultsParser.cs" />
     <Compile Include="Pack\CommonPack\GetBriefResultParser.cs" />
     <Compile Include="Pack\CommonPack\GetLinksParser.cs" />

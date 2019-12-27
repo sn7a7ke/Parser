@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace MyScore.Pack.CommonPack
+namespace Parser
 {
     public static class ExtensionNode
     {
@@ -32,5 +32,22 @@ namespace MyScore.Pack.CommonPack
             return func(node.Descendants().FirstOrDefault(d => d.HasClass(className))?.InnerText)?.Trim();
         }
 
+        public static string InnerTextSplit(this HtmlNode node, int choice, params char[] separator)
+        {
+            var parts = node?.InnerText?.Split(separator);
+            if (parts == null || parts.Length == 0)
+                return null;
+            if (choice >= 0)
+            {
+                if (parts.Length > choice)
+                    return parts[choice].Trim();
+            }
+            else
+            {
+                if (parts.Length + choice >= 0)
+                    return parts[parts.Length + choice].Trim();
+            }
+            return null;
+        }
     }
 }
