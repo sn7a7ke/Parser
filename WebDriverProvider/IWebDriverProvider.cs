@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using OpenQA.Selenium;
 
 namespace SeleniumProvider
@@ -14,7 +15,7 @@ namespace SeleniumProvider
         void GoTo(string url, string xPath = null);
         void Quit();
         void SendKeys(string xPath, string text);
-        bool WaitElement(string xPath, int seconds);
-        bool WaitElement(string xPath, string keyToSend, int seconds, int ms, int repeat);
+        bool WaitElement(string xPath, int seconds = 60);
+        bool WaitElement(string xPath, Predicate<IWebDriver> action, int seconds = 60);
     }
 }
