@@ -15,6 +15,7 @@ namespace SeleniumProvider
         void GoTo(string url, string xPath = null);
         void Quit();
         void SendKeys(string xPath, string text);
+        void Wait(int ms = 1000);
         bool WaitElement(string xPath, int seconds = 60);
         bool WaitElement(string xPath, Predicate<IWebDriver> action, int seconds = 60);
     }

@@ -60,6 +60,8 @@ namespace SeleniumProvider
             return Driver.FindElements(By.XPath(xPath));
         }
 
+        public void Wait(int ms = 1000) => Thread.Sleep(ms);
+
         public bool WaitElement(string xPath, int seconds = 60)
         {
             var wait = new WebDriverWait(Driver, new TimeSpan(0, 0, seconds));
@@ -120,7 +122,7 @@ namespace SeleniumProvider
                 for (int i = 0; i < repeat; i++)
                 {
                     actions.SendKeys(keyToSend).Build().Perform();
-                    Thread.Sleep(ms);
+                    Wait(ms);
                 }
             }
             return isPresent;

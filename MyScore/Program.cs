@@ -19,6 +19,8 @@ namespace MyScore
             IUrl mainUrl = new MainPageUrl();
             var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPathConstants.WaitingElement);
             var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
+            var mpAction = new MainPageAction(selenium);
+            mpAction.AddMyLeagues(deficit);
 
             var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
             var liveGames = executor.Parse(new MainPageGetLiveLinksParser());
