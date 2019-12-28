@@ -14,10 +14,9 @@ namespace SeleniumProvider
 
         public string Source => Driver.PageSource;
 
-        public WebDriverProvider()
-        {
-            Driver = GetWebDriver();
-        }
+        public WebDriverProvider() => Driver = GetWebDriver();
+
+        public WebDriverProvider(IWebDriver driver) => Driver = driver;
 
         private IWebDriver GetWebDriver()
         {
