@@ -1,27 +1,20 @@
 ﻿using Parser;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.CommonPack
 {
-    public class GetLinksParser : Parser<List<string>>
+    public class GetLinksParser : ListParser<string>
     {
-        public override List<string> Parse()
+        public GetLinksParser()
         {
-            var parser = new AttributesByPatternParser
+            XPath = XPathConstants.LiveTable;
+            GetDesired = n =>
             {
-                XPath = XPath.LeaguePageLiveTable,
-                GetDesired = n =>
-                {
-                    var attribute = n.Attributes["id"]?.Value ?? "";
-                    if (Regex.IsMatch(attribute, Constants.GameAttributePattern))
-                        return attribute;
-                    return "";
-                },
-                Document = this.Document
+                var attribute = n.Attributes["id"]?.Value;
+                if (attribute != null && Regex.IsMatch(attribute, Constants.GameAttributePattern))
+                    return attribute;
+                return null;
             };
-            var results = parser.Parse();
-            return results;
         }
     }
 }

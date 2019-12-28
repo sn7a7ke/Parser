@@ -5,7 +5,6 @@ using MyScore.Pack.MainPagePack;
 using Parser;
 using Parser.Interfaces;
 using System;
-using System.Linq;
 
 namespace MyScore
 {
@@ -13,11 +12,14 @@ namespace MyScore
     {
         public static void Main(string[] args)
         {
-            Executor.Loader = new SeleniumLoader();
+            var selenium = new SeleniumLoader();
+            Executor.Loader = selenium;
             var executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
-            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPath.WaitingElement);
+            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPathConstants.WaitingElement);
+            var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
+
             var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
             var liveGames = executor.Parse(new MainPageGetLiveLinksParser());
             var briefResult = executor.Parse(new GetAllBriefResultsParser());

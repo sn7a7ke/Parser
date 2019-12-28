@@ -1,21 +1,24 @@
 ﻿using Parser;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.MainPagePack
 {
-    public class MainPageGetMyLeaguesParser : Parser<List<string>>
+    public class MainPageGetMyLeaguesParser : ListParser<string>
     {
-        public override List<string> Parse()
+        public MainPageGetMyLeaguesParser()
         {
-            var results = new List<string>();
-            var targetNodes = Document.DocumentNode.SelectNodes("//*[@id=\"my-leagues-list\"]//descendant::a");
-            foreach (var node in targetNodes)
+            XPath = XPathConstants.MyLeaguesList;
+            GetDesired = n =>
             {
-                var href = node.Attributes["href"]?.Value;
-                if (!string.IsNullOrEmpty(href) && href.Contains("football"))
-                    results.Add(href);
-            }
-            return results;
+                var attribute = n.Attributes["class"]?.Value;
+                if (!string.IsNullOrEmpty(attribute))
+                {
+                    var res = Regex.Match(attribute, Constants.LeagueAttributePattern).Value;
+                    if (!string.IsNullOrEmpty(res))
+                        return res;
+                }
+                return null;
+            };
         }
     }
 }

@@ -1,30 +1,21 @@
-﻿using MyScore.Pack.CommonPack;
-using Parser;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Parser;
 using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.MainPagePack
 {
-    public class MainPageGetScheduledLinksParser : Parser<List<string>>
+    public class MainPageGetScheduledLinksParser : ListParser<string>
     {
-        public override List<string> Parse()
+        public MainPageGetScheduledLinksParser()
         {
-            var parser = new AttributesByPatternParser
+            XPath = XPathConstants.LiveTable;
+            IsEnd = n => n.ContainClass(Constants.EndOfMyLeaguesClass);
+            GetDesired = n =>
             {
-                XPath = XPath.MainPageLiveTable,
-                IsEnd = n => n.ContainClass(Constants.EndOfMyLeaguesClass),
-                GetDesired = n =>
-                {
-                    var attribute = n.Attributes["id"]?.Value ?? "";
-                    if (Regex.IsMatch(attribute, Constants.GameAttributePattern) && n.ContainClass(Constants.MatchScheduledClass))
-                        return attribute;
-                    return "";
-                },
-                Document = this.Document
+                var attribute = n.Attributes["id"]?.Value;
+                if (attribute != null && Regex.IsMatch(attribute, Constants.GameAttributePattern) && n.ContainClass(Constants.MatchScheduledClass))
+                    return attribute;
+                return null;
             };
-            var results = parser.Parse().Select(s => s.Substring(4)).ToList();
-            return results;
         }
     }
 }

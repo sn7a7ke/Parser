@@ -18,8 +18,10 @@ namespace MyScore.Pack.CommonPack
             string league = null;
             var rgx = new Regex(@"^\d+_\d+_");
             string leagueId = null;
-            var parentNode = Document.DocumentNode.SelectSingleNode(XPath.MainPageLiveTable);
-            foreach (var node in parentNode.ChildNodes)
+            var targetNodes = Document.DocumentNode.SelectNodes(XPathConstants.LiveTable);
+            if (targetNodes == null)
+                return results;
+            foreach (var node in targetNodes)
             {
                 if (node.HasClass("event__header"))
                 {
@@ -38,7 +40,6 @@ namespace MyScore.Pack.CommonPack
                     brief.League = league;
                     brief.LeagueId = leagueId;
                 }
-
                 if (brief != null)
                     results.Add(brief);
             }
