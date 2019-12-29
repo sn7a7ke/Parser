@@ -5,6 +5,7 @@ using MyScore.Pack.MainPagePack;
 using Parser;
 using Parser.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace MyScore
 {
@@ -20,7 +21,8 @@ namespace MyScore
             var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPathConstants.WaitingElement);
             var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
             var mpAction = new MainPageAction(selenium);
-            mpAction.AddMyLeagues(deficit);
+            mpAction.RemoveLeagues(new List<string> { "1_77_KIShoMk3" });
+            mpAction.AddLeagues(deficit);
 
             var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
             var liveGames = executor.Parse(new MainPageGetLiveLinksParser());

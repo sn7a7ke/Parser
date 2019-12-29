@@ -60,7 +60,7 @@ namespace SeleniumProvider
             return Driver.FindElements(By.XPath(xPath));
         }
 
-        public void Wait(int ms = 1000) => Thread.Sleep(ms);
+        public void Wait(int ms = 500) => Thread.Sleep(ms);
 
         public bool WaitElement(string xPath, int seconds = 60)
         {
@@ -126,6 +126,13 @@ namespace SeleniumProvider
                 }
             }
             return isPresent;
+        }
+
+        public void HoverElement(string xPath)
+        {
+            var element = Driver.FindElement(By.XPath(xPath));
+            Actions action = new Actions(Driver);
+            action.MoveToElement(element).Perform();
         }
 
         public void CloseBrowser() => Driver.Close();
