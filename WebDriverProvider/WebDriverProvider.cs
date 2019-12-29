@@ -55,6 +55,18 @@ namespace SeleniumProvider
             Driver.FindElement(By.XPath(xPath)).Click();
         }
 
+        public IWebElement FindElement(string xPath)
+        {
+            try
+            {
+                return Driver.FindElement(By.XPath(xPath));
+            }
+            catch (NoSuchElementException)
+            {
+                return null;
+            }
+        }
+
         public ReadOnlyCollection<IWebElement> FindElements(string xPath)
         {
             return Driver.FindElements(By.XPath(xPath));

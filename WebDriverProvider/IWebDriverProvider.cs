@@ -11,6 +11,7 @@ namespace SeleniumProvider
 
         void Click(string xPath);
         void CloseBrowser();
+        IWebElement FindElement(string xPath);
         ReadOnlyCollection<IWebElement> FindElements(string xPath);
         void GoTo(string url, string xPath = null);
         void Quit();
