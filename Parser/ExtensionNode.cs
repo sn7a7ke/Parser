@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Parser
 {
@@ -48,6 +49,20 @@ namespace Parser
                     return parts[parts.Length + choice].Trim();
             }
             return null;
+        }
+
+        public static string Attribute(this HtmlNode node, string attributeName, string attributePattern, string containClass = "")
+        {
+            var attribute = node.Attributes[attributeName]?.Value;
+            if (attribute != null && Regex.IsMatch(attribute, attributePattern) && node.ContainClass(containClass))
+                return attribute;
+            return null;
+        }
+
+        public static string AttributeExactlyPattern(this HtmlNode node, string attributeName, string attributePattern, string containClass = "")
+        {
+            var res = Regex.Match(node.Attribute(attributeName, attributePattern, containClass) ?? "", attributePattern)?.Value;
+            return string.IsNullOrEmpty(res) ? null : res;
         }
     }
 }

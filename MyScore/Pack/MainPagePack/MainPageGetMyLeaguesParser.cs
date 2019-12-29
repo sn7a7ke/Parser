@@ -1,5 +1,4 @@
 ﻿using Parser;
-using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.MainPagePack
 {
@@ -8,17 +7,7 @@ namespace MyScore.Pack.MainPagePack
         public MainPageGetMyLeaguesParser()
         {
             XPath = XPathConstants.MyLeaguesList;
-            GetDesired = n =>
-            {
-                var attribute = n.Attributes["class"]?.Value;
-                if (!string.IsNullOrEmpty(attribute))
-                {
-                    var res = Regex.Match(attribute, Constants.LeagueAttributePattern).Value;
-                    if (!string.IsNullOrEmpty(res))
-                        return res;
-                }
-                return null;
-            };
+            GetDesired = n => n.AttributeExactlyPattern("class", Constants.LeagueAttributePattern);
         }
     }
 }
