@@ -10,17 +10,14 @@ namespace Parser
         public static bool ContainClasses(this HtmlNode node, params string[] classes)
         {
             foreach (var cl in classes)
-            {
                 if (!node.GetClasses().Any(c => c == cl))
                     return false;
-            }
             return true;
         }
 
         public static bool ContainClass(this HtmlNode node, string className)
         {
-            var res = node.GetClasses().Any(c => c.Contains(className));
-            return res;
+            return node.GetClasses().Any(c => c.Contains(className));
         }
 
         public static string InnerTextByClass(this HtmlNode node, string className)
@@ -62,7 +59,7 @@ namespace Parser
         public static string AttributeExactlyPattern(this HtmlNode node, string attributeName, string attributePattern, string containClass = "")
         {
             var res = Regex.Match(node.Attribute(attributeName, attributePattern, containClass) ?? "", attributePattern)?.Value;
-            return string.IsNullOrEmpty(res) ? null : res;
+            return res == "" ? null : res;
         }
     }
 }
