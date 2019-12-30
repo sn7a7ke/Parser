@@ -18,7 +18,7 @@ namespace MyScore
             var executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
-            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPathConstants.WaitingElement);
+            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPathConstants.WaitingMainPageMyLeague);
             var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
             var mpAction = new MainPageAction(selenium);
             mpAction.RemoveLeagues(new List<string> { "1_77_KIShoMk3" });
@@ -35,6 +35,15 @@ namespace MyScore
                 League = "premier-league-2017-2018",
             };
             var gameLinks = executor.Process(leagueUrl, new GetLinksParser());
+
+            IUrl leagueUrl2 = new LeagueUrl
+            {
+                Game = "football",
+                Country = "ukraine",
+                League = "premier-league",
+                Fixture = "standings"
+            };
+            var league = executor.Process(leagueUrl2, new LeagueGetLeagueParser(), XPathConstants.WaitingLeaguePageTable);
 
             IUrl gameUrl = new GameUrl
             {

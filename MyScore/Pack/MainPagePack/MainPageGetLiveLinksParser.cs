@@ -8,7 +8,7 @@ namespace MyScore.Pack.MainPagePack
         {
             XPath = XPathConstants.LiveTable;
             IsEnd = n => n.ContainClass(Constants.EndOfMyLeaguesClass);
-            GetDesired = n => n.Attribute("id", Constants.GameAttributePattern, Constants.MatchLiveClass);
+            GetDesired = n => n.Attribute("id", AttributePatternConstants.GameCode, Constants.MatchLiveClass);
         }
     }
 }

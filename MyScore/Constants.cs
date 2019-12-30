@@ -5,10 +5,6 @@ namespace MyScore
 {
     public static class Constants
     {
-        public const string GameAttributePattern = @"^g_1_\w+";
-
-        public const string LeagueAttributePattern = @"\d+_\d+_\w+";
-
         public const string EndOfMyLeaguesClass = "event__header--no-my-games";
 
         public const string MatchScheduledClass = "event__match--scheduled";
@@ -38,6 +34,17 @@ namespace MyScore
 
         public const string MyLeaguesList = "//*[@id=\"my-leagues-list\"]//descendant::span";
 
-        public const string WaitingElement = "//div[contains(@class,\"sportName\")]";
+        public const string WaitingMainPageMyLeague = "//div[contains(@class,\"sportName\")]";
+
+        public const string WaitingLeaguePageTable = "//div[contains(@class,\"table__body\")]";
+    }
+
+    public static class AttributePatternConstants
+    {
+        public const string GameCode = @"^g_1_\w+";
+
+        public const string LeagueCode = @"\d+_\d+_[\w\d]+";
+
+        public const string CountryCode = @"fl_\d+";
     }
 }

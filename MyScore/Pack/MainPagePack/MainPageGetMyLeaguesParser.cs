@@ -7,7 +7,7 @@ namespace MyScore.Pack.MainPagePack
         public MainPageGetMyLeaguesParser()
         {
             XPath = XPathConstants.MyLeaguesList;
-            GetDesired = n => n.AttributeExactlyPattern("class", Constants.LeagueAttributePattern);
+            GetDesired = n => n.AttributeExactlyPattern("class", AttributePatternConstants.LeagueCode);
         }
     }
 }

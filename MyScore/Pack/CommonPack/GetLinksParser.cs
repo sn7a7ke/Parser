@@ -7,7 +7,7 @@ namespace MyScore.Pack.CommonPack
         public GetLinksParser()
         {
             XPath = XPathConstants.LiveTable;
-            GetDesired = n => n.Attribute("id", Constants.GameAttributePattern);
+            GetDesired = n => n.Attribute("id", AttributePatternConstants.GameCode);
         }
     }
 }
