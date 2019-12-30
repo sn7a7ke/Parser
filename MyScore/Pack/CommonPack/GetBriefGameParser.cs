@@ -4,13 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.CommonPack
 {
-    public class GetBriefResultParser : Parser<BriefResult>
+    public class GetBriefGameParser : Parser<BriefGame>
     {
         public string Id { get; set; }
 
-        public override BriefResult Parse()
+        public override BriefGame Parse()
         {
-            var res = new BriefResult();
+            var res = new BriefGame();
 
             res.Link = Id;
 

@@ -26,7 +26,7 @@ namespace MyScore
 
             var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
             var liveGames = executor.Parse(new MainPageGetLiveLinksParser());
-            var briefResult = executor.Parse(new GetAllBriefResultsParser());
+            var briefResult = executor.Parse(new GetAllBriefGamesParser());
 
             IUrl leagueUrl = new LeagueUrl
             {

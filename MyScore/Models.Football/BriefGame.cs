@@ -1,6 +1,6 @@
 ﻿namespace MyScore.Models.Football
 {
-    public class BriefResult
+    public class BriefGame
     {
         public string Link { get; set; }
 

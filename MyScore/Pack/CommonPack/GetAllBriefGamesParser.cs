@@ -6,14 +6,14 @@ using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.CommonPack
 {
-    public class GetAllBriefResultsParser : Parser<List<BriefResult>>
+    public class GetAllBriefGamesParser : Parser<List<BriefGame>>
     {
-        public override List<BriefResult> Parse()
+        public override List<BriefGame> Parse()
         {
-            var briefParser = new GetBriefResultParser();
+            var briefParser = new GetBriefGameParser();
             briefParser.Document = Document;
-            BriefResult brief;
-            var results = new List<BriefResult>();
+            BriefGame brief;
+            var results = new List<BriefGame>();
             string country = null;
             string league = null;
             var rgx = new Regex(@"^\d+_\d+_");

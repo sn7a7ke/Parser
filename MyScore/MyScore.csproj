@@ -54,9 +54,9 @@
   <ItemGroup>
     <Compile Include="BaseUrl.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Models.Football\BriefResult.cs" />
-    <Compile Include="Pack\CommonPack\GetAllBriefResultsParser.cs" />
-    <Compile Include="Pack\CommonPack\GetBriefResultParser.cs" />
+    <Compile Include="Models.Football\BriefGame.cs" />
+    <Compile Include="Pack\CommonPack\GetAllBriefGamesParser.cs" />
+    <Compile Include="Pack\CommonPack\GetBriefGameParser.cs" />
     <Compile Include="Pack\CommonPack\GetLinksParser.cs" />
     <Compile Include="Pack\GamePack\GameGetGameParser.cs" />
     <Compile Include="Pack\GamePack\GameUrl.cs" />
