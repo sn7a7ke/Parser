@@ -4,8 +4,8 @@
     {
         string Base { get; }
 
-        string Prefix { get; }
-
         string Get();
+
+        string[] Chunks();
     }
 }

@@ -4,10 +4,8 @@
     {
         public string GameId { get; set; }
 
-        public string Fixture { get; set; }
+        public string Fixture { get; set; } = "#match-summary";
 
-        public override string Prefix { get; protected set; } = "match/{0}/{1}";
-
-        protected override string[] Organize() => new string[] { GameId, Fixture };
+        public override string[] Chunks() => new string[] { "match", GameId, Fixture };
     }
 }

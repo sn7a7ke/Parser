@@ -33,14 +33,12 @@ namespace MyScore
                 Game = "football",
                 Country = "ukraine",
                 League = "premier-league-2017-2018",
-                Fixture = "results"
             };
             var gameLinks = executor.Process(leagueUrl, new GetLinksParser());
 
             IUrl gameUrl = new GameUrl
             {
-                GameId = "n3eCfNzq",
-                Fixture = "#match-summary"
+                GameId = "S0yP1iaC"
             };
             var game = executor.Process(gameUrl, new GameGetGameParser());
 

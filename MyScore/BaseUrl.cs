@@ -1,4 +1,5 @@
 ﻿using Parser.Interfaces;
+using System.Linq;
 
 namespace MyScore
 {
@@ -6,22 +7,14 @@ namespace MyScore
     {
         public virtual string Base { get; protected set; } = "https://www.myscore.com.ua/";
 
-        public virtual string Prefix { get; protected set; } = "";
-
         public string Get()
         {
-            var url = string.Format(Compile(), Organize());
-            return url;
+            var cc = Chunks();
+            var chunks = cc.TakeWhile(c => !string.IsNullOrEmpty(c));
+            var prefix = string.Join("/", chunks);
+            return $"{Base}{prefix}";
         }
 
-        protected virtual string Compile()
-        {
-            return $"{Base}{Prefix}";
-        }
-
-        protected virtual string[] Organize()
-        {
-            return new string[] { };
-        }
+        public virtual string[] Chunks() => new string[] { };
     }
 }
