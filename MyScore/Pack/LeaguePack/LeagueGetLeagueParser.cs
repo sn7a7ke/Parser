@@ -1,6 +1,5 @@
 ﻿using MyScore.Models.Football;
 using Parser;
-using System.Collections.Generic;
 
 namespace MyScore.Pack.LeaguePack
 {
@@ -10,7 +9,23 @@ namespace MyScore.Pack.LeaguePack
         {
             var league = LeagueSummaryParse();
 
-            var teams = TeamsParse("//div[@class=\"table__body\"]/child::div[contains(@class,\"table__row\")]");
+            var teams = new ListParser<LeagueTeam>
+            {
+                XPath = "//div[@class=\"table__body\"]/child::div[contains(@class,\"table__row\")]",
+                GetDesired = n =>
+                {
+                    var team = TeamParse(n.XPath);
+                    team.Forms = new ListParser<TeamForm>
+                    {
+                        XPath = n.XPath + "//div[contains(@class,\"table__cell--form\")]/child::a[not(contains(@class,\"form__cell--upcoming\"))]",
+                        GetDesired = nn => TeamFormParse(nn.XPath),
+                        Document = this.Document
+                    }.Parse();
+                    return team;
+                },
+                Document = this.Document
+            }.Parse();
+
             foreach (var t in teams)
             {
                 t.LeagueCode = league.Code;
@@ -38,21 +53,6 @@ namespace MyScore.Pack.LeaguePack
             league.CountryCode = GetNode("//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.CountryCode);
 
             return league;
-        }
-
-        private List<LeagueTeam> TeamsParse(string xPath, bool includeForm = true)
-        {
-            var teamNodes = GetNodes(xPath);
-            var teams = new List<LeagueTeam>();
-            LeagueTeam team;
-            foreach (var node in teamNodes)
-            {
-                team = TeamParse(node.XPath);
-                if (includeForm)
-                    team.Forms = TeamFormsParse(node.XPath + "//div[contains(@class,\"table__cell--form\")]/child::a[not(contains(@class,\"form__cell--upcoming\"))]");
-                teams.Add(team);
-            }
-            return teams;
         }
 
         private LeagueTeam TeamParse(string xPath)
@@ -83,15 +83,6 @@ namespace MyScore.Pack.LeaguePack
             team.Points = InnerText(xPath + "//div[contains(@class,\"table__cell--points\")]");
 
             return team;
-        }
-
-        private List<TeamForm> TeamFormsParse(string xPath)
-        {
-            var formNodes = GetNodes(xPath);
-            var forms = new List<TeamForm>();
-            foreach (var n in formNodes)
-                forms.Add(TeamFormParse(n.XPath));
-            return forms;
         }
 
         private TeamForm TeamFormParse(string xPath)
