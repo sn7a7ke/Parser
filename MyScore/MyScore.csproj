@@ -63,6 +63,7 @@
     <Compile Include="Pack\CommonPack\GetLinksParser.cs" />
     <Compile Include="Pack\GamePack\GameGetGameParser.cs" />
     <Compile Include="Pack\GamePack\GameUrl.cs" />
+    <Compile Include="Pack\GamePack\GamePageAction.cs" />
     <Compile Include="Pack\LeaguePack\LeagueGetLeagueParser.cs" />
     <Compile Include="Pack\LeaguePack\LeagueUrl.cs" />
     <Compile Include="Models.Football\Game.cs" />
