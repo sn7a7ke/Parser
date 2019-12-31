@@ -56,7 +56,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Models.Football\BriefGame.cs" />
     <Compile Include="Models.Football\League.cs" />
-    <Compile Include="Models.Football\Team.cs" />
+    <Compile Include="Models.Football\TeamForm.cs" />
+    <Compile Include="Models.Football\LeagueTeam.cs" />
     <Compile Include="Pack\CommonPack\GetAllBriefGamesParser.cs" />
     <Compile Include="Pack\CommonPack\GetBriefGameParser.cs" />
     <Compile Include="Pack\CommonPack\GetLinksParser.cs" />

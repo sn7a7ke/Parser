@@ -1,6 +1,8 @@
-﻿namespace MyScore.Models.Football
+﻿using System.Collections.Generic;
+
+namespace MyScore.Models.Football
 {
-    public class Team
+    public class LeagueTeam
     {
         public string LeagueCode { get; set; }
 
@@ -23,5 +25,7 @@
         public string GoalsConceded { get; set; }
 
         public string Points { get; set; }
+
+        public List<TeamForm> Forms { get; set; }
     }
 }
