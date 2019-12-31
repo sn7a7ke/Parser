@@ -9,20 +9,11 @@ namespace MyScore.Pack.GamePack
     {
         public override Game Parse()
         {
-            GameSummary sum = GameSummaryParse();
+            var summary = GameSummaryParse();
 
-            var incidentNodes = GetNodes("//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]");
-            var gis = new List<GameIncident>();
-            GameIncident gi;
-            int count = 0;
-            foreach (var node in incidentNodes)
-            {
-                gi = GameIncidentParse(node.XPath);
-                gi.InOrder = (count++).ToString();
-                gis.Add(gi);                
-            }
+            var incidents = GameIncidentsParse("//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]");
 
-            var game = new Game { Summary = sum, Incidents = gis };
+            var game = new Game { Summary = summary, Incidents = incidents };
 
             return game;
         }
@@ -67,7 +58,23 @@ namespace MyScore.Pack.GamePack
             sum.Attendance = InnerTextSplit("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[2]", 1, ':', ',');
 
             sum.Stadium = InnerTextSplit("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[3]", 1, ':', ',');
+
             return sum;
+        }
+
+        private List<GameIncident> GameIncidentsParse(string xPath)
+        {
+            var formNodes = GetNodes(xPath);
+            var res = new List<GameIncident>();
+            GameIncident gi;
+            int count = 0;
+            foreach (var n in formNodes)
+            {
+                gi = GameIncidentParse(n.XPath);
+                gi.InOrder = (count++).ToString();
+                res.Add(gi);
+            }
+            return res;
         }
 
         private GameIncident GameIncidentParse(string xPath)
