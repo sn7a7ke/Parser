@@ -55,6 +55,7 @@
     <Compile Include="BaseUrl.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Models.Football\BriefGame.cs" />
+    <Compile Include="Models.Football\GameStatistic.cs" />
     <Compile Include="Models.Football\League.cs" />
     <Compile Include="Models.Football\TeamForm.cs" />
     <Compile Include="Models.Football\LeagueTeam.cs" />

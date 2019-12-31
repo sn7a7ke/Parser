@@ -7,5 +7,7 @@ namespace MyScore.Models.Football
         public GameSummary Summary { get; set; }
 
         public List<GameIncident> Incidents { get; set; }
+
+        public List<GameStatistic> Statistics { get; set; }
     }
 }
