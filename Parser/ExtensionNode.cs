@@ -9,10 +9,8 @@ namespace Parser
     {
         public static bool ContainClasses(this HtmlNode node, params string[] classes)
         {
-            foreach (var cl in classes)
-                if (!node.GetClasses().Any(c => c == cl))
-                    return false;
-            return true;
+            var nodeClasses = node.GetClasses();
+            return !classes.Any(cl => !nodeClasses.Any(c => c == cl));
         }
 
         public static bool ContainClass(this HtmlNode node, string className)
