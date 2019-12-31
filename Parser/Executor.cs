@@ -27,5 +27,7 @@ namespace Parser
             var results = Parse(parser);
             return results;
         }
+
+        public virtual void RefreshDocument() => Document = Loader.Document;
     }
 }

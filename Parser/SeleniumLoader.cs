@@ -11,12 +11,20 @@ namespace Parser
 
         public SeleniumLoader(IWebDriver driver) : base(driver) { }
 
+        public HtmlDocument Document
+        {
+            get
+            {
+                var html = new HtmlDocument();
+                html.LoadHtml(Source);
+                return html;
+            }
+        }
+
         public HtmlDocument GetPage(IUrl url, string pendingXPath = null)
         {
             GoTo(url.Get(), pendingXPath);
-            var html = new HtmlDocument();
-            html.LoadHtml(Source);
-            return html;
+            return Document;
         }
     }
 }

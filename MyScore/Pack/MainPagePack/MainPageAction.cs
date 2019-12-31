@@ -55,11 +55,13 @@ namespace MyScore.Pack.MainPagePack
         public void Yesterday()
         {
             _provider.Click("//div[contains(@class,\"calendar__direction--yesterday\")]");
+            _provider.WaitElement("//div[contains(@class,\"event__header\")]");
         }
 
         public void Tomorrow()
         {
             _provider.Click("//div[contains(@class,\"calendar__direction--tomorrow\")]");
+            _provider.WaitElement("//div[contains(@class,\"event__header\")]");
         }
     }
 }

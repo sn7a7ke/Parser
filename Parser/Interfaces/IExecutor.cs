@@ -11,5 +11,7 @@ namespace Parser.Interfaces
         T Parse<T>(IParser<T> parser);
 
         T Process<T>(IUrl url, IParser<T> parser, string pendingXPath = null);
+
+        void RefreshDocument();
     }
 }
