@@ -60,7 +60,6 @@
     <Compile Include="Models.Football\TeamForm.cs" />
     <Compile Include="Models.Football\LeagueTeam.cs" />
     <Compile Include="Pack\CommonPack\GetAllBriefGamesParser.cs" />
-    <Compile Include="Pack\CommonPack\GetBriefGameParser.cs" />
     <Compile Include="Pack\CommonPack\GetLinksParser.cs" />
     <Compile Include="Pack\GamePack\GameGetStatisticParser.cs" />
     <Compile Include="Pack\GamePack\GameGetGameParser.cs" />

@@ -14,19 +14,26 @@ namespace MyScore
         public static void Main(string[] args)
         {
             var selenium = new SeleniumLoader();
+            var mpAction = new MainPageAction(selenium);
             Executor.Loader = selenium;
-            var executor = new Executor();
+            IExecutor executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
             var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPathConstants.WaitingMainPageMyLeague);
             var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
-            var mpAction = new MainPageAction(selenium);
             mpAction.RemoveLeagues(new List<string> { "1_77_KIShoMk3" });
             mpAction.AddLeagues(deficit);
 
             var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
+
             var liveGames = executor.Parse(new MainPageGetLiveLinksParser());
+
             var briefResult = executor.Parse(new GetAllBriefGamesParser());
+
+            mpAction.Yesterday();
+            mpAction.Yesterday();
+            executor.RefreshDocument();
+            var briefResult2 = executor.Parse(new GetAllBriefGamesParser());
 
             IUrl leagueUrl = new LeagueUrl
             {
