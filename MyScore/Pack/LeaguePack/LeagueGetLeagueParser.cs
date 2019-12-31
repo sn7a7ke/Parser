@@ -31,18 +31,18 @@ namespace MyScore.Pack.LeaguePack
 
             league.Name = InnerText("//div[@id=\"fscon\"]//div[contains(@class,\"teamHeader__name\")]");
 
-            league.Code = Document.DocumentNode.SelectSingleNode("//div[@id=\"tomyleagues\"]//span[contains(@class,\"toggleMyLeague\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.LeagueCode);
+            league.Code = GetNode("//div[@id=\"tomyleagues\"]//span[contains(@class,\"toggleMyLeague\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.LeagueCode);
 
             league.Country = InnerText("//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]/following-sibling::a");
 
-            league.CountryCode = Document.DocumentNode.SelectSingleNode("//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.CountryCode);
+            league.CountryCode = GetNode("//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.CountryCode);
 
             return league;
         }
 
         private List<LeagueTeam> TeamsParse(string xPath, bool includeForm = true)
         {
-            var teamNodes = Document.DocumentNode.SelectNodes(xPath);
+            var teamNodes = GetNodes(xPath);
             var teams = new List<LeagueTeam>();
             LeagueTeam team;
             foreach (var node in teamNodes)
@@ -59,7 +59,7 @@ namespace MyScore.Pack.LeaguePack
         {
             var team = new LeagueTeam();
 
-            var attr = Document.DocumentNode.SelectSingleNode(xPath + "//span[contains(@class,\"team_name_span\")]/a")?.GetAttributeValue("onclick", null)?.Split('/');
+            var attr = GetNode(xPath + "//span[contains(@class,\"team_name_span\")]/a")?.GetAttributeValue("onclick", null)?.Split('/');
             if (attr?.Length >= 4)
             {
                 team.InnerName = attr[2];
@@ -87,7 +87,7 @@ namespace MyScore.Pack.LeaguePack
 
         private List<TeamForm> TeamFormsParse(string xPath)
         {
-            var formNodes = Document.DocumentNode.SelectNodes(xPath);
+            var formNodes = GetNodes(xPath);
             var forms = new List<TeamForm>();
             foreach (var n in formNodes)
                 forms.Add(TeamFormParse(n.XPath));
@@ -98,7 +98,7 @@ namespace MyScore.Pack.LeaguePack
         {
             var form = new TeamForm();
 
-            var title = Document.DocumentNode.SelectSingleNode(xPath)?.GetAttributeValue("title", null);
+            var title = GetNode(xPath)?.GetAttributeValue("title", null);
             var score = title?.Split(']', ':', '&');
             if (score?.Length >= 3)
             {

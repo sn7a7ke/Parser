@@ -17,14 +17,16 @@ namespace Parser
 
         public string InnerText(string xPath, Func<string, string> func)
         {
-            var node = Document.DocumentNode.SelectSingleNode(xPath);
-            return func(node?.InnerText)?.Trim();
+            return func(GetNode(xPath)?.InnerText)?.Trim();
         }
 
         public string InnerTextSplit(string xPath, int choice, params char[] separator)
         {
-            var node = Document.DocumentNode.SelectSingleNode(xPath);
-            return node.InnerTextSplit(choice, separator);
+            return GetNode(xPath)?.InnerTextSplit(choice, separator);
         }
+
+        public HtmlNode GetNode(string xPath) => Document.DocumentNode.SelectSingleNode(xPath);
+
+        public HtmlNodeCollection GetNodes(string xPath) => Document.DocumentNode.SelectNodes(xPath);
     }
 }

@@ -31,7 +31,7 @@ namespace Parser
         public override List<T> Parse()
         {
             var results = new List<T>();
-            var targetNodes = Document.DocumentNode.SelectNodes(XPath);
+            var targetNodes = GetNodes(XPath);
             if (targetNodes == null)
                 return results;
             foreach (var node in targetNodes)

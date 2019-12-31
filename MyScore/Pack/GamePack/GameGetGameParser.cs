@@ -11,7 +11,7 @@ namespace MyScore.Pack.GamePack
         {
             GameSummary sum = GameSummaryParse();
 
-            var incidentNodes = Document.DocumentNode.SelectNodes("//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]");
+            var incidentNodes = GetNodes("//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]");
             var gis = new List<GameIncident>();
             GameIncident gi;
             int count = 0;
@@ -76,7 +76,7 @@ namespace MyScore.Pack.GamePack
 
             incident.Time = InnerText(xPath + "//div[contains(@class,\"time-box\")]");
 
-            var mainDiv = Document.DocumentNode.SelectSingleNode(xPath + "/div[contains(@class,\"icon-box\")]");
+            var mainDiv = GetNode(xPath + "/div[contains(@class,\"icon-box\")]");
 
             incident.Type = mainDiv?.GetClasses()?.FirstOrDefault(c => !c.Contains("icon-box"));
 

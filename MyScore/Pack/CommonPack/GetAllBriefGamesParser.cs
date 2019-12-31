@@ -18,7 +18,7 @@ namespace MyScore.Pack.CommonPack
             string league = null;
             var rgx = new Regex(@"^\d+_\d+_");
             string leagueId = null;
-            var targetNodes = Document.DocumentNode.SelectNodes(XPathConstants.LiveTable);
+            var targetNodes = GetNodes(XPathConstants.LiveTable);
             if (targetNodes == null)
                 return results;
             foreach (var node in targetNodes)
