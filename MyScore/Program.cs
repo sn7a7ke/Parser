@@ -51,6 +51,13 @@ namespace MyScore
             };
             var game = executor.Process(gameUrl, new GameGetGameParser());
 
+            IUrl gameUrl2 = new GameUrl
+            {
+                GameId = "EezrvIMP",
+                Fixture = "#match-statistics;0"
+            };
+            var gameStatistic = executor.Process(gameUrl2, new GameGetStatisticParser(), "//div[@id=\"tab-statistics-0-statistic\"]");
+
             Console.WriteLine("Done...");
             Console.ReadKey();
         }
