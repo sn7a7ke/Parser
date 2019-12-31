@@ -34,11 +34,12 @@ namespace Parser
             var targetNodes = GetNodes(XPath);
             if (targetNodes == null)
                 return results;
+            T res;
             foreach (var node in targetNodes)
             {
                 if (IsEnd(node))
                     break;
-                var res = GetDesired(node);
+                res = GetDesired(node);
                 if (res != null)
                     results.Add(res);
             }
