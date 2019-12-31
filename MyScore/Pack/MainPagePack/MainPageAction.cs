@@ -51,5 +51,15 @@ namespace MyScore.Pack.MainPagePack
             _provider.Wait();
             _provider.Click($"//*[@id=\"my-leagues-list\"]/descendant::span[contains(@class,\"{cl}\")]");
         }
+
+        public void Yesterday()
+        {
+            _provider.Click("//div[contains(@class,\"calendar__direction--yesterday\")]");
+        }
+
+        public void Tomorrow()
+        {
+            _provider.Click("//div[contains(@class,\"calendar__direction--tomorrow\")]");
+        }
     }
 }
