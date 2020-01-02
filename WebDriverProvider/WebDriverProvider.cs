@@ -52,7 +52,16 @@ namespace SeleniumProvider
 
         public void Click(string xPath)
         {
+            ScrollTo(xPath);
             Driver.FindElement(By.XPath(xPath)).Click();
+        }
+
+        public void ScrollTo(string xPath)
+        {
+            var element = Driver.FindElement(By.XPath(xPath));
+            Actions actions = new Actions(Driver);
+            actions.MoveToElement(element);
+            actions.Perform();
         }
 
         public IWebElement FindElement(string xPath)
@@ -74,7 +83,7 @@ namespace SeleniumProvider
 
         public void Wait(int ms = 500) => Thread.Sleep(ms);
 
-        public bool WaitElement(string xPath, int seconds = 60)
+        public bool WaitFor(Predicate<IWebDriver> pending, int seconds = 60)
         {
             var wait = new WebDriverWait(Driver, new TimeSpan(0, 0, seconds));
             try
@@ -83,7 +92,7 @@ namespace SeleniumProvider
                 {
                     try
                     {
-                        return Driver.FindElement(By.XPath(xPath)).Displayed;
+                        return pending.Invoke(Driver);
                     }
                     catch (StaleElementReferenceException)
                     {
@@ -100,6 +109,16 @@ namespace SeleniumProvider
             {
                 return false;
             }
+        }
+
+        public bool WaitEnabledElement(string xPath, int seconds = 60)
+        {
+            return WaitFor((d) => d.FindElement(By.XPath(xPath)).Enabled, seconds);
+        }
+
+        public bool WaitElement(string xPath, int seconds = 60)
+        {
+            return WaitFor( (d) => d.FindElement(By.XPath(xPath)).Displayed, seconds);
         }
 
         /// <summary>

@@ -6,7 +6,15 @@ namespace Parser
 {
     public abstract class Parser<T> : IParser<T>
     {
+        private string _xPath = "";
+
         public HtmlDocument Document { get; set; }
+
+        public string XPath
+        {
+            get => _xPath;
+            set => _xPath = value ?? throw new NullReferenceException();
+        }
 
         public abstract T Parse();
 

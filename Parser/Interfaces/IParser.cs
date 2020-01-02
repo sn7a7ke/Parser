@@ -1,5 +1,4 @@
 ﻿using HtmlAgilityPack;
-using System;
 
 namespace Parser.Interfaces
 {
@@ -7,10 +6,8 @@ namespace Parser.Interfaces
     {
         HtmlDocument Document { get; set; }
 
+        string XPath { get; set; }
+
         T Parse();
-
-        string InnerText(string xPath);
-
-        string InnerText(string xPath, Func<string, string> func);
     }
 }

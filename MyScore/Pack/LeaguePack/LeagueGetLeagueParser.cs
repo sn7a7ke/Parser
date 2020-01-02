@@ -5,13 +5,18 @@ namespace MyScore.Pack.LeaguePack
 {
     public class LeagueGetLeagueParser : Parser<League>
     {
+        public LeagueGetLeagueParser()
+        {
+            XPath = "//div[@class=\"table__body\"]/child::div[contains(@class,\"table__row\")]";
+        }
+
         public override League Parse()
         {
             var league = LeagueSummaryParse();
 
             var teams = new ListParser<LeagueTeam>
             {
-                XPath = "//div[@class=\"table__body\"]/child::div[contains(@class,\"table__row\")]",
+                XPath = this.XPath,
                 GetDesired = n =>
                 {
                     var team = TeamParse(n.XPath);

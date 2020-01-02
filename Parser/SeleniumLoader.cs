@@ -7,6 +7,8 @@ namespace Parser
 {
     public class SeleniumLoader : WebDriverProvider, ILoader
     {
+        private readonly HtmlDocument _html = new HtmlDocument();
+
         public SeleniumLoader() : base() { }
 
         public SeleniumLoader(IWebDriver driver) : base(driver) { }
@@ -15,9 +17,8 @@ namespace Parser
         {
             get
             {
-                var html = new HtmlDocument();
-                html.LoadHtml(Source);
-                return html;
+                _html.LoadHtml(Source);
+                return _html;
             }
         }
 

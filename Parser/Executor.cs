@@ -5,17 +5,19 @@ namespace Parser
 {
     public class Executor : IExecutor
     {
-        public HtmlDocument Document { get; set; } = new HtmlDocument();
+        public HtmlDocument Document => Loader.Document;
 
         public static ILoader Loader { get; set; }
 
         public virtual void Load(IUrl url, string pendingXPath = null)
         {
-            Document = Loader.GetPage(url, pendingXPath);
+            Loader.GetPage(url, pendingXPath);
         }
 
         public virtual T Parse<T>(IParser<T> parser)
         {
+            if (!string.IsNullOrEmpty(parser.XPath) && !Loader.WaitEnabledElement(parser.XPath))
+                throw new NodeNotFoundException();
             parser.Document = Document;
             var results = parser.Parse();
             return results;
@@ -27,7 +29,5 @@ namespace Parser
             var results = Parse(parser);
             return results;
         }
-
-        public virtual void RefreshDocument() => Document = Loader.Document;
     }
 }

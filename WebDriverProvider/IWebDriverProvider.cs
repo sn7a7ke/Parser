@@ -18,7 +18,8 @@ namespace SeleniumProvider
         void SendKeys(string xPath, string text);
         void Wait(int ms = 500);
         bool WaitElement(string xPath, int seconds = 60);
-        bool WaitElement(string xPath, Predicate<IWebDriver> action, int seconds = 60);
+        bool WaitFor(Predicate<IWebDriver> pending, int seconds = 60);
+        bool WaitEnabledElement(string xPath, int seconds = 60);
         void HoverElement(string xPath);
     }
 }

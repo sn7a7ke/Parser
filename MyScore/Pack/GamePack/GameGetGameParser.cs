@@ -7,11 +7,16 @@ namespace MyScore.Pack.GamePack
 {
     public class GameGetGameParser : Parser<Game>
     {
+        public GameGetGameParser()
+        {
+            XPath = "//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]";
+        }
+
         public override Game Parse()
         {
             var summary = GameSummaryParse();
 
-            var incidents = GameIncidentsParse("//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]");
+            var incidents = GameIncidentsParse(XPath);
 
             var game = new Game { Summary = summary, Incidents = incidents };
 

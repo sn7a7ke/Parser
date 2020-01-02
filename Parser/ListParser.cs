@@ -8,13 +8,6 @@ namespace Parser
     {
         private Func<HtmlNode, T> _getDesired = (n) => default(T);
         private Func<HtmlNode, bool> _isEnd = (n) => false;
-        private string _xPath;
-
-        public string XPath
-        {
-            get => _xPath;
-            set => _xPath = value ?? throw new NullReferenceException();
-        }
 
         public Func<HtmlNode, T> GetDesired
         {

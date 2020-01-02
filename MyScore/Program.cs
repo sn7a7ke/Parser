@@ -31,8 +31,6 @@ namespace MyScore
             var briefResult = executor.Parse(new GetAllBriefGamesParser());
 
             mpAction.Yesterday();
-            mpAction.Yesterday();
-            executor.RefreshDocument();
             var briefResult2 = executor.Parse(new GetAllBriefGamesParser());
 
             IUrl leagueUrl = new LeagueUrl
