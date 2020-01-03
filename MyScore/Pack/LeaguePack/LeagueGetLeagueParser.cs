@@ -1,35 +1,24 @@
-﻿using MyScore.Models.Football;
+﻿using HtmlAgilityPack;
+using MyScore.Models.Football;
 using Parser;
 
 namespace MyScore.Pack.LeaguePack
 {
     public class LeagueGetLeagueParser : Parser<League>
     {
-        public LeagueGetLeagueParser()
+        public LeagueGetLeagueParser() : base("//div[@class=\"table__body\"]/child::div[contains(@class,\"table__row\")]")
         {
-            XPath = "//div[@class=\"table__body\"]/child::div[contains(@class,\"table__row\")]";
         }
 
         public override League Parse()
         {
             var league = LeagueSummaryParse();
 
-            var teams = new ListParser<LeagueTeam>
+            var ltParser = new LeagueTeamParser(this.XPath)
             {
-                XPath = this.XPath,
-                GetDesired = n =>
-                {
-                    var team = TeamParse(n.XPath);
-                    team.Forms = new ListParser<TeamForm>
-                    {
-                        XPath = n.XPath + "//div[contains(@class,\"table__cell--form\")]/child::a[not(contains(@class,\"form__cell--upcoming\"))]",
-                        GetDesired = nn => TeamFormParse(nn.XPath),
-                        Document = this.Document
-                    }.Parse();
-                    return team;
-                },
                 Document = this.Document
-            }.Parse();
+            };
+            var teams = ltParser.Parse();
 
             foreach (var t in teams)
             {
@@ -60,57 +49,84 @@ namespace MyScore.Pack.LeaguePack
             return league;
         }
 
-        private LeagueTeam TeamParse(string xPath)
+        public class LeagueTeamParser : ListParser<LeagueTeam>
         {
-            var team = new LeagueTeam();
-
-            var attr = GetNode(xPath + "//span[contains(@class,\"team_name_span\")]/a")?.GetAttributeValue("onclick", null)?.Split('/');
-            if (attr?.Length >= 4)
+            public LeagueTeamParser(string xPath) : base(xPath)
             {
-                team.InnerName = attr[2];
-                team.Code = attr[3];
             }
 
-            team.Name = InnerText(xPath + "//span[contains(@class,\"team_name_span\")]/a");
+            public override LeagueTeam GetDesired(HtmlNode node)
+            {
+                var team = TeamParse(node.XPath);
+                var tParser = new TeamFormParser(node.XPath + "//div[contains(@class,\"table__cell--form\")]/child::a[not(contains(@class,\"form__cell--upcoming\"))]")
+                {
+                    Document = this.Document
+                };
+                team.Forms = tParser.Parse();
+                return team;
+            }
 
-            team.Matches = InnerText(xPath + "//div[contains(@class,\"table__cell--matches_played\")]");
+            private LeagueTeam TeamParse(string xPath)
+            {
+                var team = new LeagueTeam();
 
-            team.Wins = InnerText(xPath + "//div[contains(@class,\"table__cell--wins_regular\")]");
+                var attr = GetNode(xPath + "//span[contains(@class,\"team_name_span\")]/a")?.GetAttributeValue("onclick", null)?.Split('/');
+                if (attr?.Length >= 4)
+                {
+                    team.InnerName = attr[2];
+                    team.Code = attr[3];
+                }
 
-            team.Draws = InnerText(xPath + "//div[contains(@class,\"table__cell--draws\")]");
+                team.Name = InnerText(xPath + "//span[contains(@class,\"team_name_span\")]/a");
 
-            team.Losses = InnerText(xPath + "//div[contains(@class,\"table__cell--losses_regular\")]");
+                team.Matches = InnerText(xPath + "//div[contains(@class,\"table__cell--matches_played\")]");
 
-            team.GoalsScored = InnerTextSplit(xPath + "//div[contains(@class,\"table__cell--goals\")]", 0, ':');
+                team.Wins = InnerText(xPath + "//div[contains(@class,\"table__cell--wins_regular\")]");
 
-            team.GoalsConceded = InnerTextSplit(xPath + "//div[contains(@class,\"table__cell--goals\")]", 1, ':');
+                team.Draws = InnerText(xPath + "//div[contains(@class,\"table__cell--draws\")]");
 
-            team.Points = InnerText(xPath + "//div[contains(@class,\"table__cell--points\")]");
+                team.Losses = InnerText(xPath + "//div[contains(@class,\"table__cell--losses_regular\")]");
 
-            return team;
+                team.GoalsScored = InnerTextSplit(xPath + "//div[contains(@class,\"table__cell--goals\")]", 0, ':');
+
+                team.GoalsConceded = InnerTextSplit(xPath + "//div[contains(@class,\"table__cell--goals\")]", 1, ':');
+
+                team.Points = InnerText(xPath + "//div[contains(@class,\"table__cell--points\")]");
+
+                return team;
+            }
         }
 
-        private TeamForm TeamFormParse(string xPath)
+        public class TeamFormParser : ListParser<TeamForm>
         {
-            var form = new TeamForm();
-
-            var title = GetNode(xPath)?.GetAttributeValue("title", null);
-            var score = title?.Split(']', ':', '&');
-            if (score?.Length >= 3)
+            public TeamFormParser(string xPath) : base(xPath)
             {
-                form.ScoreHomeTeam = score[1].Trim();
-                form.ScoreAwayTeam = score[2].Trim();
             }
 
-            var team = title?.Split('(', '-', ')');
-            if (team?.Length >= 4)
-            {
-                form.HomeTeam = team[1].Trim();
-                form.AwayTeam = team[2].Trim();
-                form.DateTime = team[3].Trim();
-            }
+            public override TeamForm GetDesired(HtmlNode node) => TeamFormParse(node.XPath);
 
-            return form;
+            private TeamForm TeamFormParse(string xPath)
+            {
+                var form = new TeamForm();
+
+                var title = GetNode(xPath)?.GetAttributeValue("title", null);
+                var score = title?.Split(']', ':', '&');
+                if (score?.Length >= 3)
+                {
+                    form.ScoreHomeTeam = score[1].Trim();
+                    form.ScoreAwayTeam = score[2].Trim();
+                }
+
+                var team = title?.Split('(', '-', ')');
+                if (team?.Length >= 4)
+                {
+                    form.HomeTeam = team[1].Trim();
+                    form.AwayTeam = team[2].Trim();
+                    form.DateTime = team[3].Trim();
+                }
+
+                return form;
+            }
         }
     }
 }

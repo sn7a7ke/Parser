@@ -1,13 +1,14 @@
-﻿using Parser;
+﻿using HtmlAgilityPack;
+using Parser;
 
 namespace MyScore.Pack.MainPagePack
 {
     public class MainPageGetMyLeaguesParser : ListParser<string>
     {
-        public MainPageGetMyLeaguesParser()
+        public MainPageGetMyLeaguesParser() : base(XPathConstants.MyLeaguesList)
         {
-            XPath = XPathConstants.MyLeaguesList;
-            GetDesired = n => n.AttributeExactlyPattern("class", AttributePatternConstants.LeagueCode);
         }
+
+        public override string GetDesired(HtmlNode node) => node.AttributeExactlyPattern("class", AttributePatternConstants.LeagueCode);
     }
 }

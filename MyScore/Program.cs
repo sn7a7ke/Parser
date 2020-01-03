@@ -14,13 +14,13 @@ namespace MyScore
         public static void Main(string[] args)
         {
             var selenium = new SeleniumLoader();
-            var mpAction = new MainPageAction(selenium);
             Executor.Loader = selenium;
             IExecutor executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
             var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPathConstants.WaitingMainPageMyLeague);
             var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
+            var mpAction = new MainPageAction(selenium);
             mpAction.RemoveLeagues(new List<string> { "1_77_KIShoMk3" });
             mpAction.AddLeagues(deficit);
 

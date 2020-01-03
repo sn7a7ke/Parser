@@ -6,22 +6,18 @@ namespace Parser
 {
     public abstract class Parser<T> : IParser<T>
     {
-        private string _xPath = "";
+        protected Parser(string xPath)
+        {
+            XPath = xPath ?? throw new ArgumentNullException(nameof(xPath));
+        }
 
         public HtmlDocument Document { get; set; }
 
-        public string XPath
-        {
-            get => _xPath;
-            set => _xPath = value ?? throw new NullReferenceException();
-        }
+        public string XPath { get; protected set; }
 
         public abstract T Parse();
 
-        public string InnerText(string xPath)
-        {
-            return InnerText(xPath, s => s);
-        }
+        public string InnerText(string xPath) => InnerText(xPath, s => s);
 
         public string InnerText(string xPath, Func<string, string> func)
         {

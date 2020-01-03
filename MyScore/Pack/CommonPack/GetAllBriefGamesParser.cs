@@ -1,47 +1,39 @@
-﻿using MyScore.Models.Football;
+﻿using HtmlAgilityPack;
+using MyScore.Models.Football;
 using Parser;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.CommonPack
 {
-    public class GetAllBriefGamesParser : Parser<List<BriefGame>>
+    public class GetAllBriefGamesParser : ListParser<BriefGame>
     {
-        public override List<BriefGame> Parse()
+        public GetAllBriefGamesParser() : base(XPathConstants.LiveTable)
         {
-            BriefGame brief;
-            var results = new List<BriefGame>();
-            string country = null;
-            string league = null;
-            var rgx = new Regex(@"^\d+_\d+_");
-            string leagueId = null;
-            var targetNodes = GetNodes(XPathConstants.LiveTable);
-            if (targetNodes == null)
-                return results;
-            foreach (var node in targetNodes)
-            {
-                if (node.HasClass("event__header"))
-                {
-                    country = node.InnerTextByClass("event__title--type");
-                    league = node.InnerTextByClass("event__title--name");
-                    var tempNode = node.SelectSingleNode("//span[contains(@class,\"toggleMyLeague\")]");
-                    var classes = tempNode?.GetClasses();
-                    leagueId = classes?.FirstOrDefault(a => rgx.IsMatch(a));
-                    brief = null;
-                }
-                else
-                {
-                    brief = BriefGameParse(node.XPath);
-                    brief.Country = country;
-                    brief.League = league;
-                    brief.LeagueId = leagueId;
-                }
-                if (brief != null)
-                    results.Add(brief);
-            }
-            return results;
         }
+
+        public override bool IsHeader(HtmlNode node) => node.HasClass("event__header");
+
+        public override BriefGame Filling(BriefGame header, BriefGame processed)
+        {
+            processed.Country = header.Country;
+            processed.League = header.League;
+            processed.LeagueId = header.LeagueId;
+            return processed;
+        }
+
+        public override BriefGame GetHeader(HtmlNode node)
+        {
+            BriefGame header = new BriefGame();
+            header.Country = node.InnerTextByClass("event__title--type");
+            header.League = node.InnerTextByClass("event__title--name");
+            var tempNode = node.SelectSingleNode("//span[contains(@class,\"toggleMyLeague\")]");
+            var classes = tempNode?.GetClasses();
+            header.LeagueId = classes?.FirstOrDefault(a => Regex.IsMatch(a, AttributePatternConstants.LeagueCode));
+            return header;
+        }
+
+        public override BriefGame GetDesired(HtmlNode node) => BriefGameParse(node.XPath);
 
         private BriefGame BriefGameParse(string xPath)
         {

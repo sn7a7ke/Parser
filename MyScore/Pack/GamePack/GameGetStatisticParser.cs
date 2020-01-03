@@ -1,15 +1,16 @@
-﻿using MyScore.Models.Football;
+﻿using HtmlAgilityPack;
+using MyScore.Models.Football;
 using Parser;
 
 namespace MyScore.Pack.GamePack
 {
     public class GameGetStatisticParser : ListParser<GameStatistic>
     {
-        public GameGetStatisticParser()
+        public GameGetStatisticParser() : base("//div[@id=\"tab-statistics-0-statistic\"]/child::div")
         {
-            XPath = "//div[@id=\"tab-statistics-0-statistic\"]/child::div";
-            GetDesired = n => ParameterGameStatisticParse(n.XPath);
         }
+
+        public override GameStatistic GetDesired(HtmlNode node) => ParameterGameStatisticParse(node.XPath);
 
         private GameStatistic ParameterGameStatisticParse(string xPath)
         {

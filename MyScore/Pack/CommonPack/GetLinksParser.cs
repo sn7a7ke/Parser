@@ -1,13 +1,14 @@
-﻿using Parser;
+﻿using HtmlAgilityPack;
+using Parser;
 
 namespace MyScore.Pack.CommonPack
 {
     public class GetLinksParser : ListParser<string>
     {
-        public GetLinksParser()
+        public GetLinksParser() : base(XPathConstants.LiveTable)
         {
-            XPath = XPathConstants.LiveTable;
-            GetDesired = n => n.Attribute("id", AttributePatternConstants.GameCode);
         }
+
+        public override string GetDesired(HtmlNode node) => node.Attribute("id", AttributePatternConstants.GameCode);
     }
 }

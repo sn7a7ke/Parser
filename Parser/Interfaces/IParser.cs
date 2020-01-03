@@ -6,7 +6,7 @@ namespace Parser.Interfaces
     {
         HtmlDocument Document { get; set; }
 
-        string XPath { get; set; }
+        string XPath { get; }
 
         T Parse();
     }
