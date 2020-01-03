@@ -18,7 +18,7 @@ namespace MyScore
             IExecutor executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
-            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser(), XPathConstants.WaitingMainPageMyLeague);
+            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser());
             var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
             var mpAction = new MainPageAction(selenium);
             mpAction.RemoveLeagues(new List<string> { "1_77_KIShoMk3" });
@@ -48,7 +48,7 @@ namespace MyScore
                 League = "premier-league",
                 Fixture = "standings"
             };
-            var league = executor.Process(leagueUrl2, new LeagueGetLeagueParser(), XPathConstants.WaitingLeaguePageTable);
+            var league = executor.Process(leagueUrl2, new LeagueGetLeagueParser());
 
             IUrl gameUrl = new GameUrl
             {

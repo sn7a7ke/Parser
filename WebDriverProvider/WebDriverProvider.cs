@@ -42,7 +42,7 @@ namespace SeleniumProvider
         {
             Driver.Url = url;
             if (!string.IsNullOrEmpty(xPath))
-                WaitElement(xPath);
+                WaitEnabledElement(xPath);
         }
 
         public void SendKeys(string xPath, string text)
@@ -116,7 +116,7 @@ namespace SeleniumProvider
             return WaitFor((d) => d.FindElement(By.XPath(xPath)).Enabled, seconds);
         }
 
-        public bool WaitElement(string xPath, int seconds = 60)
+        public bool WaitDisplayedElement(string xPath, int seconds = 60)
         {
             return WaitFor( (d) => d.FindElement(By.XPath(xPath)).Displayed, seconds);
         }
@@ -128,9 +128,9 @@ namespace SeleniumProvider
         /// <param name="action">steps to be taken</param>
         /// <param name="seconds">appearance time</param>
         /// <returns></returns>
-        public bool WaitElement(string xPath, Predicate<IWebDriver> action, int seconds = 60)
+        public bool WaitDisplayedElement(string xPath, Predicate<IWebDriver> action, int seconds = 60)
         {
-            if (WaitElement(xPath, seconds))
+            if (WaitDisplayedElement(xPath, seconds))
                 return action.Invoke(Driver);                
             return false;
         }
@@ -145,7 +145,7 @@ namespace SeleniumProvider
         /// <returns></returns>
         public bool WaitingAction(IWebDriver driver, string xPath, string keyToSend, int ms = 50, int repeat = 10)
         {
-            var isPresent = WaitElement(xPath);
+            var isPresent = WaitDisplayedElement(xPath);
             if (isPresent)
             {
                 driver.FindElement(By.XPath(xPath)).Click();

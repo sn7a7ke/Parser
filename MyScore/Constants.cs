@@ -33,10 +33,6 @@ namespace MyScore
         public const string LiveTable = "//div[contains(@class,\"sportName\")]/child::div";
 
         public const string MyLeaguesList = "//*[@id=\"my-leagues-list\"]//descendant::span";
-
-        public const string WaitingMainPageMyLeague = "//div[contains(@class,\"sportName\")]";
-
-        public const string WaitingLeaguePageTable = "//div[contains(@class,\"table__body\")]";
     }
 
     public static class AttributePatternConstants
