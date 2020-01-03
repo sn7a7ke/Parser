@@ -9,10 +9,7 @@ namespace Parser
 
         public static ILoader Loader { get; set; }
 
-        public virtual void Load(IUrl url, string pendingXPath = null)
-        {
-            Loader.GetPage(url, pendingXPath);
-        }
+        public virtual void Load(IUrl url, string pendingXPath = null) => Loader.GetPage(url, pendingXPath);
 
         public virtual T Parse<T>(IParser<T> parser)
         {
@@ -25,7 +22,8 @@ namespace Parser
 
         public virtual T Process<T>(IUrl url, IParser<T> parser, string pendingXPath = null)
         {
-            Load(url, pendingXPath);
+            var pending = (string.IsNullOrEmpty(pendingXPath) && !string.IsNullOrEmpty(parser.XPath)) ? parser.XPath : null;
+            Load(url, pending);
             var results = Parse(parser);
             return results;
         }
