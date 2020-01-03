@@ -72,7 +72,6 @@
     <Compile Include="Pack\LeaguePack\LeagueUrl.cs" />
     <Compile Include="Models.Football\Game.cs" />
     <Compile Include="Models.Football\GameIncident.cs" />
-    <Compile Include="Models.Football\GameSummary.cs" />
     <Compile Include="Pack\MainPagePack\MainPageAction.cs" />
     <Compile Include="Pack\MainPagePack\MainPageGetLiveLinksParser.cs" />
     <Compile Include="Pack\MainPagePack\MainPageGetScheduledLinksParser.cs" />

@@ -13,18 +13,16 @@ namespace MyScore.Pack.GamePack
 
         public override Game Parse()
         {
-            var summary = GameSummaryParse();
+            var game = GameSummaryParse();
 
-            var incidents = GameIncidentsParse(XPath);
-
-            var game = new Game { Summary = summary, Incidents = incidents };
+            game.Incidents = GameIncidentsParse(XPath);
 
             return game;
         }
 
-        private GameSummary GameSummaryParse()
+        private Game GameSummaryParse()
         {
-            var sum = new GameSummary();
+            var sum = new Game();
 
             sum.Country = InnerTextSplit("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]", 0, '"', ':');
 
