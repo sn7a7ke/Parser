@@ -32,5 +32,10 @@ namespace Parser
         public HtmlNode GetNode(string xPath) => Document.DocumentNode.SelectSingleNode(xPath);
 
         public HtmlNodeCollection GetNodes(string xPath) => Document.DocumentNode.SelectNodes(xPath);
+
+        public string[] AttributeSplit(string xPath, string attribute, params char[] separator)
+        {
+            return GetNode(xPath)?.GetAttributeValue(attribute, null)?.Split(separator);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using MyScore.Pack.GamePack;
 using MyScore.Pack.LeaguePack;
 using MyScore.Pack.MainPagePack;
+using MyScore.Pack.TeamPack;
 using Parser;
 using Parser.Interfaces;
 using System;
@@ -61,7 +62,14 @@ namespace MyScore
                 GameId = "EezrvIMP",
                 Fixture = "#match-statistics;0"
             };
-            var gameStatistic = executor.Process(gameUrl2, new GameGetStatisticParser(), "//div[@id=\"tab-statistics-0-statistic\"]");
+            var gameStatistic = executor.Process(gameUrl2, new GameGetStatisticParser());
+
+            IUrl teamUrl = new TeamUrl
+            {
+                InnerName = "shakhtar",
+                Code = "4ENWX2OA"
+            };
+            var team = executor.Process(teamUrl, new TeamGetTeamParser());
 
             Console.WriteLine("Done...");
             Console.ReadKey();

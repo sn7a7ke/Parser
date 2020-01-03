@@ -56,11 +56,14 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Models.Football\BriefGame.cs" />
     <Compile Include="Models.Football\GameStatistic.cs" />
+    <Compile Include="Models.Football\Team.cs" />
     <Compile Include="Models.Football\League.cs" />
     <Compile Include="Models.Football\TeamForm.cs" />
     <Compile Include="Models.Football\LeagueTeam.cs" />
     <Compile Include="Pack\CommonPack\GetAllBriefGamesParser.cs" />
     <Compile Include="Pack\CommonPack\GetLinksParser.cs" />
+    <Compile Include="Pack\TeamPack\TeamGetTeamParser.cs" />
+    <Compile Include="Pack\TeamPack\TeamUrl.cs" />
     <Compile Include="Pack\GamePack\GameGetStatisticParser.cs" />
     <Compile Include="Pack\GamePack\GameGetGameParser.cs" />
     <Compile Include="Pack\GamePack\GameUrl.cs" />

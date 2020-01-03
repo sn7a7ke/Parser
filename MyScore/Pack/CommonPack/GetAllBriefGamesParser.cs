@@ -12,6 +12,10 @@ namespace MyScore.Pack.CommonPack
         {
         }
 
+        public GetAllBriefGamesParser(string xPath) : base(xPath + XPathConstants.LiveTable)
+        {
+        }
+
         public override bool IsHeader(HtmlNode node) => node.HasClass("event__header");
 
         public override BriefGame Filling(BriefGame header, BriefGame processed)
@@ -39,11 +43,11 @@ namespace MyScore.Pack.CommonPack
         {
             var res = new BriefGame();
 
-            res.Link = GetNode(xPath).GetAttributeValue("id", null);
+            res.Code = GetNode(xPath).GetAttributeValue("id", null);
 
             res.Stage = InnerText(xPath + "//div[contains(@class,\"event__stage--block\")]");
 
-            res.Time = InnerText(xPath + "//div[contains(@class,\"event__time\")]");
+            res.Time = GetNode(xPath + "//div[contains(@class,\"event__time\")]")?.GetDirectInnerText()?.Trim();
 
             res.HomeTeam = InnerText(xPath + "//div[contains(@class,\"event__participant--home\")]");
 
@@ -53,11 +57,23 @@ namespace MyScore.Pack.CommonPack
 
             res.ScoreAwayTeam = InnerText(xPath + "//div[contains(@class,\"event__scores\")]/span[last()]");
 
-            var inner = InnerText(xPath + "//div[@class=\"event__part\"]");
-            if (inner != null)
+            var innerFT = InnerText(xPath + "//div[contains(@class,\"event__scores\")]/div[@class=\"event__part\"]");
+            if (innerFT != null)
             {
                 var rgx = new Regex(@"\d+");
-                var halvesScore = rgx.Matches(inner);
+                var halvesScore = rgx.Matches(innerFT);
+                if (halvesScore.Count >= 2)
+                {
+                    res.ScoreFTHomeTeam = halvesScore[0].Value;
+                    res.ScoreFTAwayTeam = halvesScore[1].Value;
+                }
+            }
+
+            var innerHalf = InnerText(xPath + "/div[@class=\"event__part\"]");
+            if (innerHalf != null)
+            {
+                var rgx = new Regex(@"\d+");
+                var halvesScore = rgx.Matches(innerHalf);
                 if (halvesScore.Count >= 2)
                 {
                     res.ScoreHalfHomeTeam = halvesScore[0].Value;

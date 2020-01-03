@@ -20,7 +20,7 @@
 
         public string ScoreAwayTeam { get; set; }
 
-        //after a penalty shootout
+        //before a penalty shootout
         public string ScoreFTHomeTeam { get; set; }
 
         public string ScoreFTAwayTeam { get; set; }

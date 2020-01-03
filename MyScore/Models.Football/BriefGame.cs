@@ -2,7 +2,7 @@
 {
     public class BriefGame
     {
-        public string Link { get; set; }
+        public string Code { get; set; }
 
         public string Country { get; set; }
 
@@ -25,5 +25,9 @@
         public string ScoreHalfHomeTeam { get; set; }
 
         public string ScoreHalfAwayTeam { get; set; }
+
+        public string ScoreFTHomeTeam { get; set; }
+
+        public string ScoreFTAwayTeam { get; set; }
     }
 }

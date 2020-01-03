@@ -39,6 +39,8 @@ namespace MyScore
     {
         public const string GameCode = @"^g_1_\w+";
 
+        public const string TeamCode = @"\d+_[\w\d]+";
+
         public const string LeagueCode = @"\d+_\d+_[\w\d]+";
 
         public const string CountryCode = @"fl_\d+";
