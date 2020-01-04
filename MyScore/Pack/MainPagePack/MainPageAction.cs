@@ -21,7 +21,7 @@ namespace MyScore.Pack.MainPagePack
             {
                 var num = Regex.Match(s, @"_(\w+)_").Groups[1].Value;
                 var id = "lmenu_" + num;
-                AddLeague(id, s);                
+                AddLeague(id, s);
             }
         }
 

@@ -70,7 +70,7 @@ namespace MyScore.Pack.LeaguePack
             {
                 var team = new LeagueTeam();
 
-                var attr = GetNode(xPath + "//span[contains(@class,\"team_name_span\")]/a")?.GetAttributeValue("onclick", null)?.Split('/');
+                var attr = AttributeSplit(xPath + "//span[contains(@class,\"team_name_span\")]/a", "onclick", '/');
                 if (attr?.Length >= 4)
                 {
                     team.InnerName = attr[2];
