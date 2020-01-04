@@ -1,16 +1,11 @@
-﻿using HtmlAgilityPack;
-using Parser;
+﻿using MyScore.Pack.CommonPack;
 
 namespace MyScore.Pack.MainPagePack
 {
-    public class MainPageGetLiveLinksParser : ListParser<string>
+    public class MainPageGetLiveLinksParser : GameLinksParser
     {
-        public MainPageGetLiveLinksParser() : base(XPathConstants.LiveTable)
+        public MainPageGetLiveLinksParser() : base(Constants.MatchLiveClass, Constants.EndOfMyLeaguesClass)
         {
         }
-
-        public override string GetDesired(HtmlNode node) => node.Attribute("id", AttributePatternConstants.GameCode, Constants.MatchLiveClass);
-
-        public override bool IsEnd(HtmlNode node) => node.ContainClass(Constants.EndOfMyLeaguesClass);
     }
 }
