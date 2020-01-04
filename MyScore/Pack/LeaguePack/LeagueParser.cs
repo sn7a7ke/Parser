@@ -4,9 +4,9 @@ using Parser;
 
 namespace MyScore.Pack.LeaguePack
 {
-    public class LeagueGetLeagueParser : Parser<League>
+    public class LeagueParser : Parser<League>
     {
-        public LeagueGetLeagueParser() : base("//div[@class=\"table__body\"]/child::div[contains(@class,\"table__row\")]")
+        public LeagueParser() : base("//div[@class=\"table__body\"]/child::div[contains(@class,\"table__row\")]")
         {
         }
 
@@ -49,13 +49,13 @@ namespace MyScore.Pack.LeaguePack
             return league;
         }
 
-        public class LeagueTeamParser : ListParser<LeagueTeam>
+        public class LeagueTeamParser : ListParser<TeamResults>
         {
             public LeagueTeamParser(string xPath) : base(xPath)
             {
             }
 
-            public override LeagueTeam GetDesired(HtmlNode node)
+            public override TeamResults GetDesired(HtmlNode node)
             {
                 var team = TeamParse(node.XPath);
                 var tParser = new TeamFormParser(node.XPath + "//div[contains(@class,\"table__cell--form\")]/child::a[not(contains(@class,\"form__cell--upcoming\"))]")
@@ -66,9 +66,9 @@ namespace MyScore.Pack.LeaguePack
                 return team;
             }
 
-            private LeagueTeam TeamParse(string xPath)
+            private TeamResults TeamParse(string xPath)
             {
-                var team = new LeagueTeam();
+                var team = new TeamResults();
 
                 var attr = AttributeSplit(xPath + "//span[contains(@class,\"team_name_span\")]/a", "onclick", '/');
                 if (attr?.Length >= 4)

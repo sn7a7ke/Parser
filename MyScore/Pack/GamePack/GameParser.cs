@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace MyScore.Pack.GamePack
 {
-    public class GameGetGameParser : Parser<Game>
+    public class GameParser : Parser<Game>
     {
-        public GameGetGameParser() : base("//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]")
+        public GameParser() : base("//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]")
         {
         }
 

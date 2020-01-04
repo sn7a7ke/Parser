@@ -3,12 +3,12 @@ using Parser;
 
 namespace MyScore.Pack.CommonPack
 {
-    public class GameLinksParser : ListParser<string>
+    public class GamesLinksParser : ListParser<string>
     {
         private readonly string _constraint;
         private readonly string _ending;
 
-        public GameLinksParser(string constraint, string ending) : base(XPathConstants.LiveTable)
+        public GamesLinksParser(string constraint, string ending) : base(XPathConstants.LiveTable)
         {
             _constraint = constraint;
             _ending = ending;

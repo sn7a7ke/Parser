@@ -4,9 +4,9 @@ using Parser;
 
 namespace MyScore.Pack.TeamPack
 {
-    public class TeamGetTeamParser : Parser<Team>
+    public class TeamParser : Parser<Team>
     {
-        public TeamGetTeamParser() : base(XPathConstants.LiveTable)
+        public TeamParser() : base(XPathConstants.LiveTable)
         {
         }
 

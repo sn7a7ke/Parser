@@ -4,9 +4,9 @@ using Parser;
 
 namespace MyScore.Pack.GamePack
 {
-    public class GameGetStatisticParser : ListParser<GameStatistic>
+    public class GameStatisticParser : ListParser<GameStatistic>
     {
-        public GameGetStatisticParser() : base("//div[@id=\"tab-statistics-0-statistic\"]/child::div")
+        public GameStatisticParser() : base("//div[@id=\"tab-statistics-0-statistic\"]/child::div")
         {
         }
 

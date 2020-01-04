@@ -3,9 +3,9 @@ using Parser;
 
 namespace MyScore.Pack.MainPagePack
 {
-    public class MainPageGetMyLeaguesParser : ListParser<string>
+    public class MyLeaguesParser : ListParser<string>
     {
-        public MainPageGetMyLeaguesParser() : base(XPathConstants.MyLeaguesList)
+        public MyLeaguesParser() : base(XPathConstants.MyLeaguesList)
         {
         }
 

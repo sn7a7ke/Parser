@@ -19,15 +19,15 @@ namespace MyScore
             IExecutor executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
-            var myLeaguesLinks = executor.Process(mainUrl, new MainPageGetMyLeaguesParser());
+            var myLeaguesLinks = executor.Process(mainUrl, new MyLeaguesParser());
             var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
             var mpAction = new MainPageAction(selenium);
             mpAction.RemoveLeagues(new List<string> { "1_77_KIShoMk3" });
             mpAction.AddLeagues(deficit);
 
-            var scheduledGames = executor.Parse(new MainPageGetScheduledLinksParser());
+            var scheduledGames = executor.Parse(new ScheduledGamesLinksParser());
 
-            var liveGames = executor.Parse(new MainPageGetLiveLinksParser());
+            var liveGames = executor.Parse(new LiveGamesLinksParser());
 
             var briefResult = executor.Parse(new GetAllBriefGamesParser());
 
@@ -40,7 +40,7 @@ namespace MyScore
                 Country = "ukraine",
                 League = "premier-league-2017-2018",
             };
-            var gameLinks = executor.Process(leagueUrl, new GetLinksParser());
+            var gameLinks = executor.Process(leagueUrl, new AllGamesLinksParser());
 
             IUrl leagueUrl2 = new LeagueUrl
             {
@@ -49,27 +49,27 @@ namespace MyScore
                 League = "premier-league",
                 Fixture = "standings"
             };
-            var league = executor.Process(leagueUrl2, new LeagueGetLeagueParser());
+            var league = executor.Process(leagueUrl2, new LeagueParser());
 
             IUrl gameUrl = new GameUrl
             {
                 GameId = "S0yP1iaC"
             };
-            var game = executor.Process(gameUrl, new GameGetGameParser());
+            var game = executor.Process(gameUrl, new GameParser());
 
             IUrl gameUrl2 = new GameUrl
             {
                 GameId = "EezrvIMP",
                 Fixture = "#match-statistics;0"
             };
-            var gameStatistic = executor.Process(gameUrl2, new GameGetStatisticParser());
+            var gameStatistic = executor.Process(gameUrl2, new GameStatisticParser());
 
             IUrl teamUrl = new TeamUrl
             {
                 InnerName = "shakhtar",
                 Code = "4ENWX2OA"
             };
-            var team = executor.Process(teamUrl, new TeamGetTeamParser());
+            var team = executor.Process(teamUrl, new TeamParser());
 
             Console.WriteLine("Done...");
             Console.ReadKey();
