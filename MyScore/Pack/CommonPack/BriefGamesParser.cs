@@ -6,13 +6,13 @@ using System.Text.RegularExpressions;
 
 namespace MyScore.Pack.CommonPack
 {
-    public class GetAllBriefGamesParser : ListParser<BriefGame>
+    public class BriefGamesParser : ListParser<BriefGame>
     {
-        public GetAllBriefGamesParser() : base(XPathConstants.LiveTable)
+        public BriefGamesParser() : base(XPathConstants.LiveTable)
         {
         }
 
-        public GetAllBriefGamesParser(string xPath) : base(xPath + XPathConstants.LiveTable)
+        public BriefGamesParser(string xPath) : base(xPath + XPathConstants.LiveTable)
         {
         }
 

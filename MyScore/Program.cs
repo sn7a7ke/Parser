@@ -29,10 +29,10 @@ namespace MyScore
 
             var liveGames = executor.Parse(new LiveGamesLinksParser());
 
-            var briefResult = executor.Parse(new GetAllBriefGamesParser());
+            var briefResult = executor.Parse(new BriefGamesParser());
 
             mpAction.Yesterday();
-            var briefResult2 = executor.Parse(new GetAllBriefGamesParser());
+            var briefResult2 = executor.Parse(new BriefGamesParser());
 
             IUrl leagueUrl = new LeagueUrl
             {
