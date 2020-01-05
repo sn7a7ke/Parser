@@ -3,10 +3,18 @@ using System.Collections.Generic;
 
 namespace Parser
 {
-    public class ListParser<T> : Parser<List<T>>
+    public abstract class ListParser<T> : Parser<List<T>>
     {
-        public ListParser(string xPath) : base(xPath)
+        public virtual HtmlNodeCollection Nodes => Node.SelectNodes(DescendantPrefix);
+
+        public virtual string DescendantPrefix { get; protected set; } = "./child::div";
+
+        protected virtual void AddPending()
         {
+            var prefix = DescendantPrefix[0] == '.'
+                ? DescendantPrefix.Substring(1)
+                : DescendantPrefix;
+            Pending.Add(XPath + prefix);
         }
 
         public virtual bool IsHeader(HtmlNode node) => false;
@@ -22,11 +30,10 @@ namespace Parser
         public override List<T> Parse()
         {
             var results = new List<T>();
-            var targetNodes = GetNodes(XPath);
-            if (targetNodes == null)
+            if (Nodes == null)
                 return results;
             T header = default(T);
-            foreach (var node in targetNodes)
+            foreach (var node in Nodes)
             {
                 if (IsEnd(node))
                     break;

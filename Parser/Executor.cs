@@ -9,11 +9,14 @@ namespace Parser
 
         public static ILoader Loader { get; set; }
 
-        public virtual void Load(IUrl url, string pendingXPath = null) => Loader.GetPage(url, pendingXPath);
+        public virtual void Load(IUrl url, string pendingXPath = null)
+        {
+            Loader.GetPage(url, pendingXPath);
+        }
 
         public virtual T Parse<T>(IParser<T> parser)
         {
-            if (!string.IsNullOrEmpty(parser.XPath) && !Loader.WaitEnabledElement(parser.XPath))
+            if (!ToWait(parser))
                 throw new NodeNotFoundException();
             parser.Document = Document;
             var results = parser.Parse();
@@ -22,10 +25,16 @@ namespace Parser
 
         public virtual T Process<T>(IUrl url, IParser<T> parser, string pendingXPath = null)
         {
-            var pending = (string.IsNullOrEmpty(pendingXPath) && !string.IsNullOrEmpty(parser.XPath)) ? parser.XPath : null;
-            Load(url, pending);
-            var results = Parse(parser);
-            return results;
+            Load(url, pendingXPath);
+            return Parse(parser);
+        }
+
+        private bool ToWait<T>(IParser<T> parser)
+        {
+            foreach (var p in parser.Pending)
+                if (!Loader.WaitEnabledElement(p))
+                    return false;
+            return true;
         }
     }
 }

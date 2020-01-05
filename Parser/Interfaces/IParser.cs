@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System.Collections.Generic;
 
 namespace Parser.Interfaces
 {
@@ -6,7 +7,11 @@ namespace Parser.Interfaces
     {
         HtmlDocument Document { get; set; }
 
-        string XPath { get; }
+        HtmlNode Node { get; }
+
+        string XPath { get; set; }
+
+        List<string> Pending { get; }
 
         T Parse();
     }

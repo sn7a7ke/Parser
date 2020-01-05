@@ -41,6 +41,7 @@ namespace MyScore
                 League = "premier-league-2017-2018",
             };
             var gameLinks = executor.Process(leagueUrl, new AllGamesLinksParser());
+            //"Показать больше матчей" - CLICK
 
             IUrl leagueUrl2 = new LeagueUrl
             {
@@ -53,7 +54,7 @@ namespace MyScore
 
             IUrl gameUrl = new GameUrl
             {
-                GameId = "S0yP1iaC"
+                GameId = "S0yP1iaC" //lbdY67Wj
             };
             var game = executor.Process(gameUrl, new GameParser());
 

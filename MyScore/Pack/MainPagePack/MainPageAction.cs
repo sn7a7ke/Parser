@@ -46,9 +46,7 @@ namespace MyScore.Pack.MainPagePack
         public void RemoveLeague(string cl)
         {
             _provider.HoverElement($"//*[@id=\"my-leagues-list\"]/descendant::span[contains(@class,\"{cl}\")]/parent::li");
-            _provider.Wait();
             _provider.HoverElement($"//*[@id=\"my-leagues-list\"]/descendant::span[contains(@class,\"{cl}\")]");
-            _provider.Wait();
             _provider.Click($"//*[@id=\"my-leagues-list\"]/descendant::span[contains(@class,\"{cl}\")]");
         }
 

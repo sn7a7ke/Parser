@@ -1,4 +1,5 @@
-﻿using MyScore.Models.Football;
+﻿using HtmlAgilityPack;
+using MyScore.Models.Football;
 using MyScore.Pack.CommonPack;
 using Parser;
 
@@ -6,22 +7,34 @@ namespace MyScore.Pack.TeamPack
 {
     public class TeamParser : Parser<Team>
     {
-        public TeamParser() : base(XPathConstants.LiveTable)
+        private readonly BriefGamesParser _lastParser;
+        private readonly BriefGamesParser _scheduleParser;
+
+        public override HtmlDocument Document
         {
+            get => base.Document;
+            set
+            {
+                base.Document = value;
+                _lastParser.Document = value;
+                _scheduleParser.Document = value;
+            }
+        }
+
+        public TeamParser(string xPath = null)
+        {
+            XPath = (xPath ?? "") + "//div[@id=\"mc\"]";
+            _lastParser = new BriefGamesParser("//div[@id=\"live-table\"]//div[contains(@class,\"summary-results\")]");
+            Pending.AddRange(_lastParser.Pending);
+            _scheduleParser = new BriefGamesParser("//div[@id=\"live-table\"]//div[contains(@class,\"summary-fixtures\")]");
+            Pending.AddRange(_scheduleParser.Pending);
         }
 
         public override Team Parse()
         {
             var team = TeamSummaryParse();
-
-            var lastParser = new GetAllBriefGamesParser("//div[@id=\"live-table\"]//div[contains(@class,\"summary-results\")]");
-            lastParser.Document = this.Document;
-            team.LastResults = lastParser.Parse();
-
-            var scheduleParser = new GetAllBriefGamesParser("//div[@id=\"live-table\"]//div[contains(@class,\"summary-fixtures\")]");
-            scheduleParser.Document = this.Document;
-            team.Schedule = scheduleParser.Parse();
-
+            team.LastResults = _lastParser.Parse();
+            team.Schedule = _scheduleParser.Parse();
             return team;
         }
 
@@ -29,16 +42,16 @@ namespace MyScore.Pack.TeamPack
         {
             var sum = new Team();
 
-            sum.Name = InnerText("//div[@class=\"teamHeader__name\"]");
+            sum.Name = Node.DescendantInnerText(".//div[@class=\"teamHeader__name\"]");
 
-            var parts = AttributeSplit("//*[@id=\"li0\"]", "href", '/');
+            var parts = Node.SelectSingleNode(".//*[@id=\"li0\"]")?.AttributeSplit("href", '/');
             if (parts?.Length >= 4)
             {
                 sum.InnerName = parts[2];
                 sum.Code = parts[3];
             }
 
-            sum.CountryCode = GetNode("//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.CountryCode);
+            sum.CountryCode = Node.SelectSingleNode(".//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.CountryCode);
 
             return sum;
         }

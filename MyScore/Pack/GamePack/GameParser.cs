@@ -1,22 +1,34 @@
-﻿using MyScore.Models.Football;
+﻿using HtmlAgilityPack;
+using MyScore.Models.Football;
 using Parser;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MyScore.Pack.GamePack
 {
     public class GameParser : Parser<Game>
     {
-        public GameParser() : base("//div[@id=\"summary-content\"]/div[@class=\"detailMS\"]/child::div[contains(@class,\"detailMS__incidentRow\")]")
+        private readonly GameIncidentsParser _giParser;
+
+        public override HtmlDocument Document
         {
+            get => base.Document;
+            set
+            {
+                base.Document = value;
+                _giParser.Document = value;
+            }
+        }
+
+        public GameParser(string xPath = null)
+        {
+            XPath = (xPath ?? "") + "//div[@id=\"detcon\"]";
+            _giParser = new GameIncidentsParser();
+            Pending.AddRange(_giParser.Pending);
         }
 
         public override Game Parse()
         {
             var game = GameSummaryParse();
-
-            game.Incidents = GameIncidentsParse(XPath);
-
+            game.Incidents = _giParser.Parse();
             return game;
         }
 
@@ -24,86 +36,52 @@ namespace MyScore.Pack.GamePack
         {
             var sum = new Game();
 
-            sum.Country = InnerTextSplit("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]", 0, '"', ':');
+            var descNode = Node.SelectSingleNode(".//div[@class=\"description\"]");
 
-            sum.League = InnerText("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]/a", t =>
+            sum.Country = descNode?.SelectSingleNode(".//span[@class=\"description__country\"]").InnerTextSplit(0, ':');
+
+            var league = descNode?.DescendantInnerText(".//a[@href=\"#\"]").Split('-');
+            if (league?.Length >= 2)
             {
-                var p = t.Split('-');
-                var s = p[p.Length - 1].Trim();
-                return t.Substring(0, t.Length - s.Length).Trim(' ', '-');
-            });
+                sum.League = league[0].Trim();
+                sum.Round = league[1].Trim();
+            }
 
-            sum.Round = InnerTextSplit("//*[@id=\"detcon\"]/div[2]/div[1]/span[2]/a", -1, '-');
+            sum.DateTime = descNode?.DescendantInnerText(".//*[@id=\"utime\"]");
 
-            sum.DateTime = InnerText("//*[@id=\"utime\"]");
+            var headNode = Node.SelectSingleNode(".//div[@class=\"team-primary-content\"]");
 
-            sum.HomeTeam = InnerText("//*[@id=\"flashscore\"]/div[1]/div[1]/div[2]/div/div/a");
+            sum.HomeTeam = headNode?.DescendantInnerText(".//div[contains(@class,\"tname-home\")]//a[@href=\"#\"]");
 
-            sum.AwayTeam = InnerText("//*[@id=\"flashscore\"]/div[1]/div[3]/div[2]/div/div/a");
+            sum.AwayTeam = headNode?.DescendantInnerText(".//div[contains(@class,\"tname-away\")]//a[@href=\"#\"]");
 
-            sum.ScoreHomeTeam = InnerText("//*[@id=\"event_detail_current_result\"]/span[1]");
+            var score = headNode?.DescendantInnerText(".//*[@id=\"event_detail_current_result\"]")?.Split('-', '(', ')');
+            if (score?.Length >= 2)
+            {
+                sum.ScoreHomeTeam = score[0].Trim();
+                sum.ScoreAwayTeam = score[1].Trim();
+            }
+            if (score?.Length >= 4)
+            {
+                sum.ScoreFTHomeTeam = score[2].Trim();
+                sum.ScoreFTAwayTeam = score[3].Trim();
+            }
 
-            sum.ScoreAwayTeam = InnerText("//*[@id=\"event_detail_current_result\"]/span[2]/span[2]");
+            sum.Completed = headNode?.DescendantInnerText(".//div[contains(@class,\"info-status\")]");
 
-            sum.ScoreFTHomeTeam = InnerText("//*[@id=\"event_detail_current_result\"]/span[3]/span[1]");
+            sum.ScoreHalfHomeTeam = Node.DescendantInnerText(".//*[@id=\"summary-content\"]//div[contains(@class,\"stage-12\")]//span[@class=\"p1_home\"]");
 
-            sum.ScoreFTAwayTeam = InnerText("//*[@id=\"event_detail_current_result\"]/span[3]/span[2]/span[2]");
+            sum.ScoreHalfAwayTeam = Node.DescendantInnerText(".//*[@id=\"summary-content\"]//div[contains(@class,\"stage-12\")]//span[@class=\"p1_away\"]");
 
-            sum.Completed = InnerText("//*[@id=\"flashscore\"]/div[1]/div[2]/div[2]");
+            var infoNode = Node.SelectSingleNode(".//div[@class=\"match-information-data\"]");
 
-            sum.ScoreHalfHomeTeam = InnerText("//*[@id=\"summary-content\"]/div[1]/div[1]/div[2]/span[1]"); //wait loading
+            sum.Judge = infoNode?.DescendantInnerTextByContent("Судья")?.Split(':', ',')[1];
 
-            sum.ScoreHalfAwayTeam = InnerText("//*[@id=\"summary-content\"]/div[1]/div[1]/div[2]/span[2]");
+            sum.Attendance = infoNode?.DescendantInnerTextByContent("Посещаемость")?.Split(':', ',')[1];
 
-            sum.Judge = InnerTextSplit("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[1]", 1, ':', ',');
-
-            sum.Attendance = InnerTextSplit("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[2]", 1, ':', ',');
-
-            sum.Stadium = InnerTextSplit("//*[@id=\"summary-content\"]/div[2]/div/div/div[2]/div[3]", 1, ':', ',');
+            sum.Stadium = infoNode?.DescendantInnerTextByContent("Стадион")?.Split(':', ',')[1];
 
             return sum;
-        }
-
-        private List<GameIncident> GameIncidentsParse(string xPath)
-        {
-            var formNodes = GetNodes(xPath);
-            var res = new List<GameIncident>();
-            GameIncident gi;
-            int count = 0;
-            foreach (var n in formNodes)
-            {
-                gi = GameIncidentParse(n.XPath);
-                gi.InOrder = (count++).ToString();
-                res.Add(gi);
-            }
-            return res;
-        }
-
-        private GameIncident GameIncidentParse(string xPath)
-        {
-            var incident = new GameIncident();
-
-            incident.Time = InnerText(xPath + "//div[contains(@class,\"time-box\")]");
-
-            var mainDiv = GetNode(xPath + "/div[contains(@class,\"icon-box\")]");
-
-            incident.Type = mainDiv?.GetClasses()?.FirstOrDefault(c => !c.Contains("icon-box"));
-
-            incident.Description = mainDiv?.GetAttributeValue("title", null);
-
-            incident.SubstitutionIn = InnerText(xPath + "//span[@class=\"substitution-in-name\"]/a");
-
-            incident.SubstitutionOut = InnerText(xPath + "//span[@class=\"substitution-out-name\"]/a");
-
-            incident.Participant = InnerText(xPath + "//span[@class=\"participant-name\"]/a");
-
-            incident.Assist = InnerText(xPath + "//span[@class=\"assist note-name\"]/a");
-
-            incident.SubIncident = InnerText(xPath + "//span[@class=\" subincident-name\"]");
-
-            incident.Note = InnerText(xPath + "//span[@class=\" note-name\"]");
-
-            return incident;
         }
     }
 }

@@ -53,6 +53,7 @@ namespace SeleniumProvider
         public void Click(string xPath)
         {
             ScrollTo(xPath);
+            WaitDisplayedElement(xPath);
             Driver.FindElement(By.XPath(xPath)).Click();
         }
 
@@ -161,6 +162,7 @@ namespace SeleniumProvider
 
         public void HoverElement(string xPath)
         {
+            WaitDisplayedElement(xPath);
             var element = Driver.FindElement(By.XPath(xPath));
             Actions action = new Actions(Driver);
             action.MoveToElement(element).Perform();

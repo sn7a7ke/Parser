@@ -8,10 +8,12 @@ namespace MyScore.Pack.CommonPack
         private readonly string _constraint;
         private readonly string _ending;
 
-        public GamesLinksParser(string constraint, string ending) : base(XPathConstants.LiveTable)
+        public GamesLinksParser(string constraint, string ending, string xPath = null)
         {
             _constraint = constraint;
             _ending = ending;
+            XPath = (xPath ?? "") + "//div[contains(@class,\"sportName\")]";
+            AddPending();
         }
 
         public override string GetDesired(HtmlNode node) => node.Attribute("id", AttributePatternConstants.GameCode, _constraint ?? "");

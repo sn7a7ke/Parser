@@ -8,12 +8,10 @@ namespace MyScore.Pack.CommonPack
 {
     public class BriefGamesParser : ListParser<BriefGame>
     {
-        public BriefGamesParser() : base(XPathConstants.LiveTable)
+        public BriefGamesParser(string xPath = null)
         {
-        }
-
-        public BriefGamesParser(string xPath) : base(xPath + XPathConstants.LiveTable)
-        {
+            XPath = (xPath ?? "") + "//div[contains(@class,\"sportName\")]";
+            AddPending();
         }
 
         public override bool IsHeader(HtmlNode node) => node.HasClass("event__header");
@@ -31,33 +29,31 @@ namespace MyScore.Pack.CommonPack
             BriefGame header = new BriefGame();
             header.Country = node.InnerTextByClass("event__title--type");
             header.League = node.InnerTextByClass("event__title--name");
-            var tempNode = node.SelectSingleNode("//span[contains(@class,\"toggleMyLeague\")]");
+            var tempNode = node.SelectSingleNode(".//span[contains(@class,\"toggleMyLeague\")]");
             var classes = tempNode?.GetClasses();
             header.LeagueId = classes?.FirstOrDefault(a => Regex.IsMatch(a, AttributePatternConstants.LeagueCode));
             return header;
         }
 
-        public override BriefGame GetDesired(HtmlNode node) => BriefGameParse(node.XPath);
-
-        private BriefGame BriefGameParse(string xPath)
+        public override BriefGame GetDesired(HtmlNode node)
         {
             var res = new BriefGame();
 
-            res.Code = GetNode(xPath).GetAttributeValue("id", null);
+            res.Code = node.GetAttributeValue("id", null);
 
-            res.Stage = InnerText(xPath + "//div[contains(@class,\"event__stage--block\")]");
+            res.Stage = node.DescendantInnerText(".//div[contains(@class,\"event__stage--block\")]");
 
-            res.Time = GetNode(xPath + "//div[contains(@class,\"event__time\")]")?.GetDirectInnerText()?.Trim();
+            res.Time = node.SelectSingleNode(".//div[contains(@class,\"event__time\")]")?.GetDirectInnerText()?.Trim();
 
-            res.HomeTeam = InnerText(xPath + "//div[contains(@class,\"event__participant--home\")]");
+            res.HomeTeam = node.DescendantInnerText(".//div[contains(@class,\"event__participant--home\")]");
 
-            res.AwayTeam = InnerText(xPath + "//div[contains(@class,\"event__participant--away\")]");
+            res.AwayTeam = node.DescendantInnerText(".//div[contains(@class,\"event__participant--away\")]");
 
-            res.ScoreHomeTeam = InnerText(xPath + "//div[contains(@class,\"event__scores\")]/span");
+            res.ScoreHomeTeam = node.DescendantInnerText(".//div[contains(@class,\"event__scores\")]/span");
 
-            res.ScoreAwayTeam = InnerText(xPath + "//div[contains(@class,\"event__scores\")]/span[last()]");
+            res.ScoreAwayTeam = node.DescendantInnerText(".//div[contains(@class,\"event__scores\")]/span[last()]");
 
-            var innerFT = InnerText(xPath + "//div[contains(@class,\"event__scores\")]/div[@class=\"event__part\"]");
+            var innerFT = node.DescendantInnerText(".//div[contains(@class,\"event__scores\")]/div[@class=\"event__part\"]");
             if (innerFT != null)
             {
                 var rgx = new Regex(@"\d+");
@@ -69,7 +65,7 @@ namespace MyScore.Pack.CommonPack
                 }
             }
 
-            var innerHalf = InnerText(xPath + "/div[@class=\"event__part\"]");
+            var innerHalf = node.DescendantInnerText("./div[@class=\"event__part\"]");
             if (innerHalf != null)
             {
                 var rgx = new Regex(@"\d+");

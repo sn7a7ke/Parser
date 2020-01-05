@@ -59,10 +59,13 @@
     <Compile Include="Models.Football\Team.cs" />
     <Compile Include="Models.Football\League.cs" />
     <Compile Include="Models.Football\TeamForm.cs" />
-    <Compile Include="Models.Football\TeamResults.cs" />
+    <Compile Include="Models.Football\TeamResult.cs" />
     <Compile Include="Pack\CommonPack\BriefGamesParser.cs" />
     <Compile Include="Pack\CommonPack\GamesLinksParser.cs" />
     <Compile Include="Pack\CommonPack\AllGamesLinksParser.cs" />
+    <Compile Include="Pack\GamePack\GameIncidentsParser.cs" />
+    <Compile Include="Pack\LeaguePack\TeamFormsParser.cs" />
+    <Compile Include="Pack\LeaguePack\TeamResultsParser.cs" />
     <Compile Include="Pack\TeamPack\TeamParser.cs" />
     <Compile Include="Pack\TeamPack\TeamUrl.cs" />
     <Compile Include="Pack\GamePack\GameStatisticParser.cs" />

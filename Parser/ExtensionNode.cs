@@ -9,23 +9,34 @@ namespace Parser
     {
         public static bool ContainClasses(this HtmlNode node, params string[] classes)
         {
-            var nodeClasses = node.GetClasses();
+            var nodeClasses = node?.GetClasses();
             return !classes.Any(cl => !nodeClasses.Any(c => c == cl));
         }
 
         public static bool ContainClass(this HtmlNode node, string className)
         {
-            return node.GetClasses().Any(c => c.Contains(className));
+            return node?.GetClasses().Any(c => c.Contains(className)) ?? false;
+        }
+
+        public static string DescendantInnerText(this HtmlNode node, string xPath)
+        {
+            return node?.SelectSingleNode(xPath)?.InnerText?.Trim();
+        }
+
+        public static string DescendantInnerTextByContent(this HtmlNode node, string pattern)
+        {
+            var rgx = new Regex(pattern);
+            return node?.Descendants().FirstOrDefault(d => rgx.IsMatch(d.GetDirectInnerText()))?.InnerText?.Trim();
         }
 
         public static string InnerTextByClass(this HtmlNode node, string className)
         {
-            return node.InnerTextByClass(className, s => s);
+            return node?.InnerTextByClass(className, s => s);
         }
 
         public static string InnerTextByClass(this HtmlNode node, string className, Func<string, string> func)
         {
-            return func(node.Descendants().FirstOrDefault(d => d.HasClass(className))?.InnerText)?.Trim();
+            return func(node?.Descendants()?.FirstOrDefault(d => d.HasClass(className))?.InnerText)?.Trim();
         }
 
         public static string InnerTextSplit(this HtmlNode node, int choice, params char[] separator)
@@ -48,7 +59,7 @@ namespace Parser
 
         public static string Attribute(this HtmlNode node, string attributeName, string attributePattern, string containClass = "")
         {
-            var attribute = node.Attributes[attributeName]?.Value;
+            var attribute = node?.Attributes[attributeName]?.Value;
             if (attribute != null && Regex.IsMatch(attribute, attributePattern) && node.ContainClass(containClass))
                 return attribute;
             return null;
@@ -56,8 +67,13 @@ namespace Parser
 
         public static string AttributeExactlyPattern(this HtmlNode node, string attributeName, string attributePattern, string containClass = "")
         {
-            var res = Regex.Match(node.Attribute(attributeName, attributePattern, containClass) ?? "", attributePattern)?.Value;
+            var res = Regex.Match(node?.Attribute(attributeName, attributePattern, containClass) ?? "", attributePattern)?.Value;
             return res == "" ? null : res;
+        }
+
+        public static string[] AttributeSplit(this HtmlNode node, string attribute, params char[] separator)
+        {
+            return node?.GetAttributeValue(attribute, null)?.Split(separator);
         }
     }
 }

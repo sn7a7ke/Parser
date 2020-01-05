@@ -6,21 +6,21 @@ namespace MyScore.Pack.GamePack
 {
     public class GameStatisticParser : ListParser<GameStatistic>
     {
-        public GameStatisticParser() : base("//div[@id=\"tab-statistics-0-statistic\"]/child::div")
+        public GameStatisticParser(string xPath = null)
         {
+            XPath = (xPath ?? "") + "//div[@id=\"tab-statistics-0-statistic\"]";
+            AddPending();
         }
 
-        public override GameStatistic GetDesired(HtmlNode node) => ParameterGameStatisticParse(node.XPath);
-
-        private GameStatistic ParameterGameStatisticParse(string xPath)
+        public override GameStatistic GetDesired(HtmlNode node)
         {
             var res = new GameStatistic();
 
-            res.HomeTeamValue = InnerText(xPath + "//div[contains(@class,\"statText--homeValue\")]");
+            res.HomeTeamValue = node.DescendantInnerText(".//div[contains(@class,\"statText--homeValue\")]");
 
-            res.Name = InnerText(xPath + "//div[contains(@class,\"statText--titleValue\")]");
+            res.Name = node.DescendantInnerText(".//div[contains(@class,\"statText--titleValue\")]");
 
-            res.AwayTeamValue = InnerText(xPath + "//div[contains(@class,\"statText--awayValue\")]");
+            res.AwayTeamValue = node.DescendantInnerText(".//div[contains(@class,\"statText--awayValue\")]");
 
             return res;
         }

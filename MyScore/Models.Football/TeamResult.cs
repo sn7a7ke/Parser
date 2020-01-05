@@ -2,7 +2,7 @@
 
 namespace MyScore.Models.Football
 {
-    public class TeamResults
+    public class TeamResult
     {
         public string LeagueCode { get; set; }
 

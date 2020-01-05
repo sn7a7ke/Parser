@@ -12,6 +12,6 @@ namespace MyScore.Models.Football
 
         public string CountryCode { get; set; }
 
-        public List<TeamResults> Teams { get; set; }
+        public List<TeamResult> Teams { get; set; }
     }
 }
