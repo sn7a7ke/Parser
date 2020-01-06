@@ -18,9 +18,9 @@ namespace MyScore.Pack.CommonPack
 
         public override BriefGame Filling(BriefGame header, BriefGame processed)
         {
-            processed.Country = header.Country;
-            processed.League = header.League;
-            processed.LeagueId = header.LeagueId;
+            processed.Country = header?.Country;
+            processed.League = header?.League;
+            processed.LeagueId = header?.LeagueId;
             return processed;
         }
 
