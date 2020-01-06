@@ -2,7 +2,7 @@
 {
     public class AllGamesLinksParser : GamesLinksParser
     {
-        public AllGamesLinksParser() : base (null, null)
+        public AllGamesLinksParser() : base (null, false)
         {
         }
     }

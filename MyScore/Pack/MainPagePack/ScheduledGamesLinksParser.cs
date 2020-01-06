@@ -4,7 +4,7 @@ namespace MyScore.Pack.MainPagePack
 {
     public class ScheduledGamesLinksParser : GamesLinksParser
     {
-        public ScheduledGamesLinksParser() : base(Constants.MatchScheduledClass, Constants.EndOfMyLeaguesClass)
+        public ScheduledGamesLinksParser() : base(Constants.MatchScheduledClass, true)
         {
         }
     }

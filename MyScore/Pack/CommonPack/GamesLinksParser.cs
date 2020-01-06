@@ -6,12 +6,12 @@ namespace MyScore.Pack.CommonPack
     public class GamesLinksParser : ListParser<string>
     {
         private readonly string _constraint;
-        private readonly string _ending;
+        private readonly bool _myLeagues;
 
-        public GamesLinksParser(string constraint, string ending, string xPath = null)
+        public GamesLinksParser(string constraint, bool myLeagues, string xPath = null)
         {
             _constraint = constraint;
-            _ending = ending;
+            _myLeagues = myLeagues;
             XPath = (xPath ?? "") + "//div[contains(@class,\"sportName\")]";
             AddPending();
         }
@@ -20,7 +20,7 @@ namespace MyScore.Pack.CommonPack
 
         public override bool IsEnd(HtmlNode node)
         {
-            return string.IsNullOrEmpty(_ending) ? base.IsEnd(node) : node.ContainClass(Constants.EndOfMyLeaguesClass);
+            return _myLeagues ? (node.ContainClass("event__header") && !node.ContainClass("top")) : base.IsEnd(node);
         }
     }
 }
