@@ -18,7 +18,6 @@ namespace Parser.Test
             Executor executor)
         {
             // arrange
-            mILoader.Setup(l => l.GetPage(mUrl.Object, null)).Returns(fHtmlDocument);
             mIParser.Setup(p => p.Parse()).Returns(fResult);
             Executor.Loader = mILoader.Object;
 

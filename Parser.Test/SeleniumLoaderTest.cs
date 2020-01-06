@@ -26,7 +26,8 @@ namespace Parser.Test
             var provider = fixture.Create<SeleniumLoader>();
 
             // act
-            var result = provider.GetPage(mUrl.Object);
+            provider.GetPage(mUrl.Object);
+            var result = provider.Document;
 
             // assert
             mIWebDriver.VerifyGet(p => p.PageSource);
