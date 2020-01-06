@@ -22,10 +22,9 @@ namespace Parser
             }
         }
 
-        public HtmlDocument GetPage(IUrl url, string pendingXPath = null)
+        public void GetPage(IUrl url, string pendingXPath = null)
         {
             GoTo(url.Get(), pendingXPath);
-            return Document;
         }
     }
 }

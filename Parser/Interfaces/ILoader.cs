@@ -6,7 +6,7 @@ namespace Parser.Interfaces
     {
         HtmlDocument Document { get; }
 
-        HtmlDocument GetPage(IUrl url, string pendingXPath = null);
+        void GetPage(IUrl url, string pendingXPath = null);
 
         bool WaitEnabledElement(string xPath, int seconds = 60);
     }
