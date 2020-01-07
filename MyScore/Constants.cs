@@ -48,7 +48,7 @@ namespace MyScore
 
     public static class AttrPatternConst
     {
-        public const string GameCode = @"^g_1_\w+";
+        public const string GameCode = @"^g_1_[\w\d]+";
 
         public const string TeamCode = @"\d+_[\w\d]+";
 

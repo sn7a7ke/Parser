@@ -34,7 +34,7 @@ namespace MyScore.Pack.CommonPack
         {
             _provider.Click($"//*[@id=\"{id}\"]");
             _provider.Wait();
-            _provider.Click($"//*[@id=\"{id}\"]/descendant::span[contains(@class,\"{cl}\")]");
+            _provider.Click($"//*[@id=\"{id}\"]//span[contains(@class,\"{cl}\")]");
         }
 
         public void RemoveLeagues(List<string> source)
@@ -45,9 +45,9 @@ namespace MyScore.Pack.CommonPack
 
         public void RemoveLeague(string cl)
         {
-            _provider.HoverElement(XPathConst.IdMyLeaguesList + $"/descendant::span[contains(@class,\"{cl}\")]/parent::li");
-            _provider.HoverElement(XPathConst.IdMyLeaguesList + $"/descendant::span[contains(@class,\"{cl}\")]");
-            _provider.Click(XPathConst.IdMyLeaguesList + $"/descendant::span[contains(@class,\"{cl}\")]");
+            _provider.HoverElement(XPathConst.IdMyLeaguesList + $"//span[contains(@class,\"{cl}\")]/parent::li");
+            _provider.HoverElement(XPathConst.IdMyLeaguesList + $"//span[contains(@class,\"{cl}\")]");
+            _provider.Click(XPathConst.IdMyLeaguesList + $"//span[contains(@class,\"{cl}\")]");
         }
 
         public void Yesterday()
@@ -60,6 +60,16 @@ namespace MyScore.Pack.CommonPack
         {
             _provider.Click("//div[contains(@class,\"calendar__direction--tomorrow\")]");
             _provider.WaitDisplayedElement(XPathConst.ContainsEventHeader);
+        }
+
+        public void MoreResults(string xPath = null)
+        {
+            _provider.Click((xPath ?? "") + "//a[contains(@class,\"event__more--static\")]");
+        }
+
+        public bool IsMoreResults(string xPath = null)
+        {
+            return _provider.FindElement((xPath ?? "") + "//a[contains(@class,\"event__more--static\")]") != null;
         }
     }
 }

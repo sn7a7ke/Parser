@@ -17,6 +17,7 @@ namespace MyScore
             var selenium = new SeleniumLoader();
             var cacheLoader = new LoaderCacheProxy(selenium);
             Executor.Loader = cacheLoader;
+            //Executor.Loader = selenium;
             IExecutor executor = new Executor();
 
             IUrl mainUrl = new MainPageUrl();
@@ -44,7 +45,6 @@ namespace MyScore
                 League = "premier-league-2017-2018",
             };
             var gameLinks = executor.Process(leagueUrl, new AllGamesLinksParser());
-            //"Показать больше матчей" - CLICK
 
             IUrl leagueUrl2 = new LeagueUrl
             {

@@ -7,7 +7,7 @@ namespace MyScore.Pack.MainPagePack
     {
         public MyLeaguesParser(string xPath = null)
         {
-            DescendantPrefix = ".//descendant::span";
+            DescendantPrefix = ".//span";
             XPath = (xPath ?? "") + XPathConst.IdMyLeaguesList;
             AddPending();
         }
