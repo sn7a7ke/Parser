@@ -41,7 +41,7 @@ namespace MyScore.Pack.CommonPack
 
             res.Code = node.GetAttributeValue("id", null);
 
-            res.Stage = node.DescendantInnerText(".//div[contains(@class,\"event__stage--block\")]");
+            res.Stage = node.SelectSingleNode(".//div[contains(@class,\"event__stage--block\")]").InnerTextSplit(0, '&');
 
             res.Time = node.SelectSingleNode(".//div[contains(@class,\"event__time\")]")?.GetDirectInnerText()?.Trim();
 
