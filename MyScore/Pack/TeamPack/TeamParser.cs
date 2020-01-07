@@ -51,7 +51,7 @@ namespace MyScore.Pack.TeamPack
                 sum.Code = parts[3];
             }
 
-            sum.CountryCode = Node.SelectSingleNode(".//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.CountryCode);
+            sum.CountryCode = Node.SelectSingleNode(".//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttrPatternConst.CountryCode);
 
             return sum;
         }

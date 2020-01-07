@@ -10,11 +10,11 @@ namespace MyScore.Pack.CommonPack
     {
         public BriefGamesParser(string xPath = null)
         {
-            XPath = (xPath ?? "") + "//div[contains(@class,\"sportName\")]";
+            XPath = (xPath ?? "") + XPathConst.ContainsSportName;
             AddPending();
         }
 
-        public override bool IsHeader(HtmlNode node) => node.HasClass("event__header");
+        public override bool IsHeader(HtmlNode node) => node.HasClass(ClassConst.EventHeader);
 
         public override BriefGame Filling(BriefGame header, BriefGame processed)
         {
@@ -31,7 +31,7 @@ namespace MyScore.Pack.CommonPack
             header.League = node.InnerTextByClass("event__title--name");
             var tempNode = node.SelectSingleNode(".//span[contains(@class,\"toggleMyLeague\")]");
             var classes = tempNode?.GetClasses();
-            header.LeagueId = classes?.FirstOrDefault(a => Regex.IsMatch(a, AttributePatternConstants.LeagueCode));
+            header.LeagueId = classes?.FirstOrDefault(a => Regex.IsMatch(a, AttrPatternConst.LeagueCode));
             return header;
         }
 

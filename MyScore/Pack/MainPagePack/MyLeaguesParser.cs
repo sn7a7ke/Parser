@@ -8,10 +8,10 @@ namespace MyScore.Pack.MainPagePack
         public MyLeaguesParser(string xPath = null)
         {
             DescendantPrefix = ".//descendant::span";
-            XPath = (xPath ?? "") + "//*[@id=\"my-leagues-list\"]";
+            XPath = (xPath ?? "") + XPathConst.IdMyLeaguesList;
             AddPending();
         }
 
-        public override string GetDesired(HtmlNode node) => node.AttributeExactlyPattern("class", AttributePatternConstants.LeagueCode);
+        public override string GetDesired(HtmlNode node) => node.AttributeExactlyPattern("class", AttrPatternConst.LeagueCode);
     }
 }

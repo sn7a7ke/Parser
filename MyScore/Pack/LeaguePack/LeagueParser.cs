@@ -51,11 +51,11 @@ namespace MyScore.Pack.LeaguePack
 
             league.Name = Node.DescendantInnerText(".//div[@id=\"fscon\"]//div[contains(@class,\"teamHeader__name\")]");
 
-            league.Code = Node.SelectSingleNode(".//div[@id=\"tomyleagues\"]//span[contains(@class,\"toggleMyLeague\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.LeagueCode);
+            league.Code = Node.SelectSingleNode(".//div[@id=\"tomyleagues\"]//span[contains(@class,\"toggleMyLeague\")]")?.AttributeExactlyPattern("class", AttrPatternConst.LeagueCode);
 
             league.Country = Node.DescendantInnerText(".//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]/following-sibling::a");
 
-            league.CountryCode = Node.SelectSingleNode(".//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttributePatternConstants.CountryCode);
+            league.CountryCode = Node.SelectSingleNode(".//h2[contains(@class,\"tournament\")]//span[contains(@class,\"flag\")]")?.AttributeExactlyPattern("class", AttrPatternConst.CountryCode);
 
             return league;
         }

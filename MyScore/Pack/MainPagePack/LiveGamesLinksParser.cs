@@ -4,7 +4,7 @@ namespace MyScore.Pack.MainPagePack
 {
     public class LiveGamesLinksParser : GamesLinksParser
     {
-        public LiveGamesLinksParser() : base(Constants.MatchLiveClass, true)
+        public LiveGamesLinksParser() : base(ClassConst.MatchLive, true)
         {
         }
     }

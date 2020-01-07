@@ -21,13 +21,15 @@ namespace MyScore
 
             IUrl mainUrl = new MainPageUrl();
             var myLeaguesLinks = executor.Process(mainUrl, new MyLeaguesParser());
-            var deficit = Utility.MissingElements(myLeaguesLinks, Constants.MyLeaguesPrefix);
+            var deficit = Utility.MissingElements(myLeaguesLinks, Const.MyLeaguesPrefix);
 
+            #region Action
             //var mpAction = new MainPageAction(selenium);
             //mpAction.RemoveLeagues(new List<string> { "1_77_KIShoMk3" });
             //mpAction.AddLeagues(deficit);
             //mpAction.Yesterday();
             //var briefResult2 = executor.Parse(new BriefGamesParser());
+            #endregion
 
             var scheduledGames = executor.Parse(new ScheduledGamesLinksParser());
 

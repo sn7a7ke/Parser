@@ -12,15 +12,15 @@ namespace MyScore.Pack.CommonPack
         {
             _constraint = constraint;
             _myLeagues = myLeagues;
-            XPath = (xPath ?? "") + "//div[contains(@class,\"sportName\")]";
+            XPath = (xPath ?? "") + XPathConst.ContainsSportName;
             AddPending();
         }
 
-        public override string GetDesired(HtmlNode node) => node.Attribute("id", AttributePatternConstants.GameCode, _constraint ?? "");
+        public override string GetDesired(HtmlNode node) => node.Attribute("id", AttrPatternConst.GameCode, _constraint ?? "");
 
         public override bool IsEnd(HtmlNode node)
         {
-            return _myLeagues ? (node.ContainClass("event__header") && !node.ContainClass("top")) : base.IsEnd(node);
+            return _myLeagues ? (node.ContainClass(ClassConst.EventHeader) && !node.ContainClass("top")) : base.IsEnd(node);
         }
     }
 }

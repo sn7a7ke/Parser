@@ -45,21 +45,21 @@ namespace MyScore.Pack.MainPagePack
 
         public void RemoveLeague(string cl)
         {
-            _provider.HoverElement($"//*[@id=\"my-leagues-list\"]/descendant::span[contains(@class,\"{cl}\")]/parent::li");
-            _provider.HoverElement($"//*[@id=\"my-leagues-list\"]/descendant::span[contains(@class,\"{cl}\")]");
-            _provider.Click($"//*[@id=\"my-leagues-list\"]/descendant::span[contains(@class,\"{cl}\")]");
+            _provider.HoverElement(XPathConst.IdMyLeaguesList + $"/descendant::span[contains(@class,\"{cl}\")]/parent::li");
+            _provider.HoverElement(XPathConst.IdMyLeaguesList + $"/descendant::span[contains(@class,\"{cl}\")]");
+            _provider.Click(XPathConst.IdMyLeaguesList + $"/descendant::span[contains(@class,\"{cl}\")]");
         }
 
         public void Yesterday()
         {
             _provider.Click("//div[contains(@class,\"calendar__direction--yesterday\")]");
-            _provider.WaitDisplayedElement("//div[contains(@class,\"event__header\")]");
+            _provider.WaitDisplayedElement(XPathConst.ContainsEventHeader);
         }
 
         public void Tomorrow()
         {
             _provider.Click("//div[contains(@class,\"calendar__direction--tomorrow\")]");
-            _provider.WaitDisplayedElement("//div[contains(@class,\"event__header\")]");
+            _provider.WaitDisplayedElement(XPathConst.ContainsEventHeader);
         }
     }
 }

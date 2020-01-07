@@ -3,14 +3,8 @@ using System.Collections.ObjectModel;
 
 namespace MyScore
 {
-    public static class Constants
+    public static class Const
     {
-        public const string EndOfMyLeaguesClass = "event__header--no-my-games";
-
-        public const string MatchScheduledClass = "event__match--scheduled";
-
-        public const string MatchLiveClass = "event__match--live";
-
         public static readonly IList<string> MyLeaguesPrefix =
             new ReadOnlyCollection<string>(new List<string>
             {
@@ -28,14 +22,31 @@ namespace MyScore
             });
     }
 
-    public static class XPathConstants
+    public static class ClassConst
     {
-        public const string LiveTable = "//div[contains(@class,\"sportName\")]/child::div";
+        public const string MatchScheduled = "event__match--scheduled";
 
-        public const string MyLeaguesList = "//*[@id=\"my-leagues-list\"]//descendant::span";
+        public const string MatchLive = "event__match--live";
+
+        public const string EventHeader = "event__header";
+
+        public const string SportName = "sportName";
     }
 
-    public static class AttributePatternConstants
+    public static class XPathConst
+    {
+        public const string ContainsBegin = "//div[contains(@class,\"";
+
+        public const string ContainsEnd = "\")]";
+
+        public const string ContainsSportName = ContainsBegin + ClassConst.SportName + ContainsEnd;
+
+        public const string ContainsEventHeader = ContainsBegin + ClassConst.EventHeader + ContainsEnd;
+
+        public const string IdMyLeaguesList = "//*[@id=\"my-leagues-list\"]";
+    }
+
+    public static class AttrPatternConst
     {
         public const string GameCode = @"^g_1_\w+";
 
