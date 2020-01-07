@@ -24,7 +24,7 @@ namespace MyScore
             var deficit = Utility.MissingElements(myLeaguesLinks, Const.MyLeaguesPrefix);
 
             #region Action
-            //var mpAction = new MainPageAction(selenium);
+            //var mpAction = new PageAction(selenium);
             //mpAction.RemoveLeagues(new List<string> { "1_77_KIShoMk3" });
             //mpAction.AddLeagues(deficit);
             //mpAction.Yesterday();

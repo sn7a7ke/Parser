@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace MyScore.Pack.MainPagePack
+namespace MyScore.Pack.CommonPack
 {
-    public class MainPageAction
+    public class PageAction
     {
         private readonly IWebDriverProvider _provider;
 
-        public MainPageAction(IWebDriverProvider provider)
+        public PageAction(IWebDriverProvider provider)
         {
             _provider = provider;
         }
